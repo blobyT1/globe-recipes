@@ -1,6 +1,16 @@
-<section class="about-page py-4 py-lg-5">
+<script>
+	import PageShell from '$lib/components/PageShell.svelte';
+	import ContentBox from '$lib/components/ContentBox.svelte';
+</script>
+
+<PageShell
+	backgroundImage="/images_background_pages/about_kitchen.png"
+	overlayLight="rgba(255, 255, 255, 0.4)"
+	overlayDark="rgba(10, 12, 16, 0.55)"
+	sectionClass="py-4 py-lg-5"
+>
 	<div class="container d-flex justify-content-center">
-		<div class="about-box p-4 p-md-5 shadow">
+		<ContentBox maxWidth="920px" className="w-100">
 			<h1 class="mb-3">About Globe Recipes</h1>
 			<p>
 				Globe Recipes explores the culinary side of every continent in a simple and enjoyable way. We
@@ -25,37 +35,6 @@
 				This website is a project as part of the study subject
 				<strong>"Prototyping"</strong>, which is taught at <strong>ZHAW, Zurich University of Applied Sciences</strong>.
 			</p>
-		</div>
+		</ContentBox>
 	</div>
-</section>
-
-<style>
-	.about-page {
-		background-image:
-			linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
-			url('/images_background_pages/about_kitchen.png');
-		background-size: cover;
-		background-position: center;
-		background-repeat: no-repeat;
-		min-height: calc(100vh - 110px);
-	}
-
-	.about-box {
-		background-color: rgba(255, 255, 255, 0.93);
-		border-radius: 1rem;
-		max-width: 920px;
-		margin: 0 auto;
-		color: #1f2937;
-	}
-
-	:global(html[data-bs-theme='dark'] .about-page) {
-		background-image:
-			linear-gradient(rgba(10, 12, 16, 0.55), rgba(10, 12, 16, 0.55)),
-			url('/images_background_pages/about_kitchen.png');
-	}
-
-	:global(html[data-bs-theme='dark'] .about-box) {
-		background-color: rgba(20, 24, 31, 0.9);
-		color: #f8f9fa;
-	}
-</style>
+</PageShell>

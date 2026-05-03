@@ -27,7 +27,7 @@
 		</div>
 		<div class="col-md-4">
 			<div class="p-3 rounded border bg-body-tertiary">
-				<div><strong>ID:</strong> {data.recipe.id}</div>
+				<div><strong>ID:</strong> {data.recipe._id}</div>
 			</div>
 		</div>
 	</div>

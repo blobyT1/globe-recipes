@@ -1,11 +1,18 @@
 import { error } from '@sveltejs/kit';
-import { recipes } from '$lib/data/recipes.js';
+import { RecipeDbError, getRecipeById } from '$lib/server/recipes-db.js';
 
 export async function load({ params }) {
-	const recipeId = Number(params.id);
-	const recipe = recipes.find((item) => item.id === recipeId);
+	let recipe;
+	try {
+		recipe = await getRecipeById(params.id);
+	} catch (dbError) {
+		if (dbError instanceof RecipeDbError) {
+			throw error(dbError.status, dbError.message);
+		}
+		throw error(500, 'Failed to load recipe details.');
+	}
 
-	if (Number.isNaN(recipeId) || !recipe) {
+	if (!recipe) {
 		throw error(404, 'Recipe not found');
 	}
 

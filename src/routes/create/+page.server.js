@@ -1,6 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
 import { continents } from '$lib/data/continents.js';
-import { recipes } from '$lib/data/recipes.js';
+import { RecipeDbError, createRecipe } from '$lib/server/recipes-db.js';
 
 export async function load({ locals }) {
 	if (!locals.user) {
@@ -77,22 +77,28 @@ export const actions = {
 			});
 		}
 
-		const nextId = recipes.length > 0 ? Math.max(...recipes.map((recipe) => recipe.id)) + 1 : 1;
-
-		recipes.push({
-			id: nextId,
-			title,
-			continent,
-			country,
-			description,
-			ingredients,
-			instructions,
-			cookingTime,
-			difficulty,
-			servings,
-			isUserCreated: true,
-			owner: locals.user.username
-		});
+		try {
+			await createRecipe({
+				title,
+				continent,
+				country,
+				description,
+				ingredients,
+				instructions,
+				cookingTime,
+				difficulty,
+				servings,
+				isUserCreated: true,
+				owner: locals.user.username
+			});
+		} catch (dbError) {
+			const message =
+				dbError instanceof RecipeDbError ? dbError.message : 'Could not save recipe right now.';
+			return fail(500, {
+				message,
+				values
+			});
+		}
 
 		throw redirect(303, '/all-recipes');
 	}

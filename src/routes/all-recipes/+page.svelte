@@ -72,7 +72,7 @@
 				{#each sortedRecipes as recipe}
 					<tr>
 						<td>
-							<a class="link-primary text-decoration-none fw-semibold" href={`/all-recipes/${recipe.id}`}>
+							<a class="link-primary text-decoration-none fw-semibold" href={`/all-recipes/${recipe._id}`}>
 								{recipe.title}
 							</a>
 						</td>
@@ -82,7 +82,7 @@
 						<td>
 							{#if recipe.isUserCreated && data.currentUser && recipe.owner === data.currentUser}
 								<form method="POST" action="?/delete">
-									<input type="hidden" name="id" value={recipe.id} />
+									<input type="hidden" name="id" value={recipe._id} />
 									<button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
 								</form>
 							{:else}

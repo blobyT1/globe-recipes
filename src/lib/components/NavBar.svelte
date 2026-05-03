@@ -4,7 +4,8 @@
 		links = [],
 		continents = [],
 		isDarkMode = false,
-		onToggleTheme = null
+		onToggleTheme = null,
+		user = null
 	} = $props();
 </script>
 
@@ -51,7 +52,14 @@
 				<button class="btn btn-outline-secondary btn-sm" type="button" onclick={onToggleTheme}>
 					{isDarkMode ? 'Light mode' : 'Dark mode'}
 				</button>
-				<a class="btn btn-primary btn-sm" href="/login">Login</a>
+				{#if user}
+					<span class="badge text-bg-light border">{user.username}</span>
+					<form method="POST" action="/logout">
+						<button class="btn btn-primary btn-sm" type="submit">Logout</button>
+					</form>
+				{:else}
+					<a class="btn btn-primary btn-sm" href="/login">Login</a>
+				{/if}
 			</div>
 		</div>
 	</div>
@@ -71,6 +79,10 @@
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
+	}
+
+	.actions form {
+		margin: 0;
 	}
 
 	@media (min-width: 992px) {

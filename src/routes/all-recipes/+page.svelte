@@ -14,8 +14,8 @@
 	}
 
 	function getSortIcon(column) {
-		if (sortColumn !== column) return '↕';
-		return sortDirection === 'asc' ? '↑' : '↓';
+		if (sortColumn !== column) return '<>';
+		return sortDirection === 'asc' ? '^' : 'v';
 	}
 
 	const sortedRecipes = $derived.by(() => {
@@ -65,6 +65,7 @@
 							Cooking Time <span class="sort-icon">{getSortIcon('cookingTime')}</span>
 						</button>
 					</th>
+					<th scope="col">Actions</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -78,6 +79,16 @@
 						<td>{recipe.continent}</td>
 						<td class="text-capitalize">{recipe.difficulty}</td>
 						<td>{recipe.cookingTime} min</td>
+						<td>
+							{#if recipe.isUserCreated && data.currentUser && recipe.owner === data.currentUser}
+								<form method="POST" action="?/delete">
+									<input type="hidden" name="id" value={recipe.id} />
+									<button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+								</form>
+							{:else}
+								<span class="text-secondary">-</span>
+							{/if}
+						</td>
 					</tr>
 				{/each}
 			</tbody>
@@ -100,3 +111,4 @@
 		font-size: 0.85em;
 	}
 </style>
+

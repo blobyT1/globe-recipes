@@ -1,12 +1,8 @@
 <script>
-	let { homeHref = '/', recipesHref = null } = $props();
+	let { homeHref = '/', recipesHref = '/all-recipes' } = $props();
 </script>
 
 <div class="d-flex flex-wrap gap-2">
 	<a class="btn btn-outline-primary" href={homeHref}>Back to Home</a>
-	{#if recipesHref}
-		<a class="btn btn-primary" href={recipesHref}>Check Out Recipes</a>
-	{:else}
-		<button type="button" class="btn btn-primary">Check Out Recipes</button>
-	{/if}
+	<a class="btn btn-primary" href={recipesHref}>Go To All Recipes</a>
 </div>

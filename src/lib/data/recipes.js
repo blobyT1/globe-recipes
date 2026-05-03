@@ -1,6 +1,6 @@
 export const recipes = [
 	{
-		id: 'asia-chicken-teriyaki',
+		id: 1,
 		title: 'Chicken Teriyaki',
 		continent: 'Asia',
 		country: 'Japan',
@@ -25,7 +25,7 @@ export const recipes = [
 		isUserCreated: false
 	},
 	{
-		id: 'europe-mushroom-risotto',
+		id: 2,
 		title: 'Mushroom Risotto',
 		continent: 'Europe',
 		country: 'Italy',
@@ -50,7 +50,7 @@ export const recipes = [
 		isUserCreated: false
 	},
 	{
-		id: 'africa-jollof-rice',
+		id: 3,
 		title: 'Jollof Rice',
 		continent: 'Africa',
 		country: 'Nigeria',
@@ -75,7 +75,7 @@ export const recipes = [
 		isUserCreated: false
 	},
 	{
-		id: 'north-america-pulled-pork-sandwich',
+		id: 4,
 		title: 'Pulled Pork Sandwich',
 		continent: 'North America',
 		country: 'United States',
@@ -100,7 +100,7 @@ export const recipes = [
 		isUserCreated: false
 	},
 	{
-		id: 'south-america-empanadas',
+		id: 5,
 		title: 'Beef Empanadas',
 		continent: 'South America',
 		country: 'Argentina',
@@ -125,7 +125,7 @@ export const recipes = [
 		isUserCreated: false
 	},
 	{
-		id: 'oceania-fish-pie',
+		id: 6,
 		title: 'Creamy Fish Pie',
 		continent: 'Oceania',
 		country: 'New Zealand',

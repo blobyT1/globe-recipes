@@ -20,9 +20,9 @@
 				<p class={index === continent.description.length - 1 ? 'mb-4' : ''}>{paragraph}</p>
 			{/each}
 
-			<div class="d-flex flex-wrap align-items-center gap-2">
+			<div class="d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-2">
 				<ContinentActionButtons />
-				<div class="dropdown">
+				<div class="dropdown ms-lg-auto">
 					<button
 						class="btn btn-outline-secondary dropdown-toggle"
 						type="button"

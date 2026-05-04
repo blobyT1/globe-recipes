@@ -118,9 +118,9 @@
 					>{form?.values?.instructions ?? ''}</textarea>
 				</div>
 
-				<div class="col-12 d-flex gap-2">
-					<button class="btn btn-primary" type="submit">Save Recipe</button>
+				<div class="col-12 d-flex flex-column flex-sm-row justify-content-sm-end gap-2 pt-2">
 					<a class="btn btn-outline-secondary" href="/all-recipes">Go to All Recipes</a>
+					<button class="btn btn-primary" type="submit">Save Recipe</button>
 				</div>
 			</form>
 		</ContentBox>

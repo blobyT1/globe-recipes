@@ -2,22 +2,14 @@ import { fail, redirect } from '@sveltejs/kit';
 import { continents } from '$lib/data/continents.js';
 import { RecipeDbError, createRecipe } from '$lib/server/recipes-db.js';
 
-export async function load({ locals }) {
-	if (!locals.user) {
-		throw redirect(303, '/login?next=/create');
-	}
-
+export async function load() {
 	return {
 		continents: continents.map((continent) => continent.name)
 	};
 }
 
 export const actions = {
-	default: async ({ request, locals }) => {
-		if (!locals.user) {
-			throw redirect(303, '/login?next=/create');
-		}
-
+	default: async ({ request }) => {
 		const formData = await request.formData();
 
 		const title = String(formData.get('title') ?? '').trim();
@@ -88,8 +80,7 @@ export const actions = {
 				cookingTime,
 				difficulty,
 				servings,
-				isUserCreated: true,
-				owner: locals.user.username
+				isUserCreated: true
 			});
 		} catch (dbError) {
 			const message =

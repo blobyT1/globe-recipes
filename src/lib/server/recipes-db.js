@@ -138,15 +138,14 @@ export async function createRecipe(recipe) {
 	}
 }
 
-export async function deleteOwnedRecipe(id, owner) {
+export async function deleteUserCreatedRecipe(id) {
 	try {
 		if (!ObjectId.isValid(id)) return 0;
 
 		const collection = await getRecipesCollection();
 		const result = await collection.deleteOne({
 			_id: new ObjectId(id),
-			isUserCreated: true,
-			owner
+			isUserCreated: true
 		});
 
 		return result.deletedCount;

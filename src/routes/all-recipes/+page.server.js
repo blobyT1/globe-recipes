@@ -1,11 +1,10 @@
-import { error, redirect } from '@sveltejs/kit';
-import { RecipeDbError, deleteOwnedRecipe, getAllRecipes } from '$lib/server/recipes-db.js';
+import { error } from '@sveltejs/kit';
+import { RecipeDbError, deleteUserCreatedRecipe, getAllRecipes } from '$lib/server/recipes-db.js';
 
-export async function load({ locals }) {
+export async function load() {
 	try {
 		return {
-			recipes: await getAllRecipes(),
-			currentUser: locals.user?.username ?? null
+			recipes: await getAllRecipes()
 		};
 	} catch (dbError) {
 		if (dbError instanceof RecipeDbError) {
@@ -16,11 +15,7 @@ export async function load({ locals }) {
 }
 
 export const actions = {
-	delete: async ({ request, locals }) => {
-		if (!locals.user) {
-			throw redirect(303, '/login?next=/all-recipes');
-		}
-
+	delete: async ({ request }) => {
 		const formData = await request.formData();
 		const recipeId = String(formData.get('id') ?? '');
 
@@ -29,7 +24,7 @@ export const actions = {
 		}
 
 		try {
-			await deleteOwnedRecipe(recipeId, locals.user.username);
+			await deleteUserCreatedRecipe(recipeId);
 		} catch (dbError) {
 			if (dbError instanceof RecipeDbError) {
 				throw error(dbError.status, dbError.message);

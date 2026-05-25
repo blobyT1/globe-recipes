@@ -4,7 +4,7 @@
 	import NavBar from '$lib/components/NavBar.svelte';
 	import { continentLinks } from '$lib/data/continents.js';
 
-	let { children, data } = $props();
+	let { children } = $props();
 	let isDarkMode = $state(false);
 	const navLinks = [
 		{ label: 'Home', href: '/' },
@@ -44,7 +44,6 @@
 	continents={continentLinks}
 	{isDarkMode}
 	onToggleTheme={toggleTheme}
-	user={data.user}
 />
 
 <main class="content-shell">

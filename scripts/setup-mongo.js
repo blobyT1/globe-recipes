@@ -4,6 +4,7 @@ import { getMongoConfig, getRecipesJsonSchema, loadRootEnvFile } from './mongo-c
 const COLLECTION = 'recipes';
 const USERS_COLLECTION = 'users';
 const SESSIONS_COLLECTION = 'sessions';
+const FAVORITES_COLLECTION = 'favorite_recipes';
 
 async function setupMongo() {
 	loadRootEnvFile();
@@ -48,6 +49,11 @@ async function setupMongo() {
 		await sessionsCollection.createIndex({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 		await sessionsCollection.createIndex({ userId: 1, expiresAt: 1 });
 		console.log('Session indexes ensured.');
+
+		const favoritesCollection = db.collection(FAVORITES_COLLECTION);
+		await favoritesCollection.createIndex({ userId: 1, recipeId: 1 }, { unique: true });
+		await favoritesCollection.createIndex({ userId: 1, createdAt: -1 });
+		console.log("Favorites indexes ensured ('userId + recipeId' unique).");
 	} catch (error) {
 		if (error instanceof MongoServerError && error.code === 13) {
 			console.error(

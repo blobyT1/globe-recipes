@@ -1,18 +1,17 @@
-import { error, isHttpError, redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import {
 	RecipeDbError,
 	deleteUserCreatedRecipe,
-	getAllRecipes,
 	getFavoriteRecipeIdsForUser,
+	getUserCreatedRecipes,
 	toggleRecipeFavorite
 } from '$lib/server/recipes-db.js';
 
 export async function load({ locals }) {
 	try {
 		const currentUserId = locals.user?.id ?? null;
-
 		return {
-			recipes: await getAllRecipes(),
+			recipes: currentUserId ? await getUserCreatedRecipes(currentUserId) : [],
 			currentUserId,
 			favoriteRecipeIds: currentUserId ? await getFavoriteRecipeIdsForUser(currentUserId) : []
 		};
@@ -20,14 +19,14 @@ export async function load({ locals }) {
 		if (dbError instanceof RecipeDbError) {
 			throw error(dbError.status, dbError.message);
 		}
-		throw error(500, 'Failed to load recipes.');
+		throw error(500, 'Failed to load user-created recipes.');
 	}
 }
 
 export const actions = {
 	toggleFavorite: async ({ request, locals }) => {
 		if (!locals.user) {
-			throw redirect(303, '/login?next=/all-recipes');
+			throw redirect(303, '/login?next=/all-recipes/user-created');
 		}
 
 		const formData = await request.formData();
@@ -50,7 +49,7 @@ export const actions = {
 
 	delete: async ({ request, locals }) => {
 		if (!locals.user) {
-			throw redirect(303, '/login?next=/all-recipes');
+			throw redirect(303, '/login?next=/all-recipes/user-created');
 		}
 
 		const formData = await request.formData();
@@ -65,17 +64,12 @@ export const actions = {
 			if (deletedCount === 0) {
 				throw error(403, 'You can only delete your own user-created recipes.');
 			}
+			return { success: true };
 		} catch (dbError) {
-			if (isHttpError(dbError)) {
-				throw dbError;
-			}
-
 			if (dbError instanceof RecipeDbError) {
 				throw error(dbError.status, dbError.message);
 			}
 			throw error(500, 'Failed to delete recipe.');
 		}
-
-		return { success: true };
 	}
 };

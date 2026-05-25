@@ -15,16 +15,27 @@
 >
 	<div class="container d-flex justify-content-center">
 		<ContentBox maxWidth="1080px" className="w-100">
-			<h1 class="mb-3">All Recipes</h1>
-			<p class="text-secondary mb-3">Browse all available recipes and open one for full details.</p>
+			<h1 class="mb-3">Favorite Recipes</h1>
+			<p class="text-secondary mb-3">Recipes you marked with the star icon.</p>
 
-			<RecipesViewNav current="all" />
+			<RecipesViewNav current="favorites" />
 
-			<RecipesTable
-				recipes={data.recipes}
-				currentUserId={data.currentUserId}
-				favoriteRecipeIds={data.favoriteRecipeIds}
-			/>
+			{#if !data.currentUserId}
+				<p class="mb-0">
+					<a class="link-primary text-decoration-none fw-semibold" href="/login?next=/all-recipes/favorites">
+						Sign in
+					</a>
+					to view your favorites.
+				</p>
+			{:else}
+				<RecipesTable
+					recipes={data.recipes}
+					currentUserId={data.currentUserId}
+					favoriteRecipeIds={data.favoriteRecipeIds}
+					showDelete={false}
+					emptyMessage="You do not have favorite recipes yet."
+				/>
+			{/if}
 		</ContentBox>
 	</div>
 </PageShell>

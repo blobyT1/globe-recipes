@@ -3,7 +3,6 @@
 	import PageShell from '$lib/components/PageShell.svelte';
 
 	let { data } = $props();
-	let isFavorite = $state(false);
 
 	const creatorName = $derived(
 		data.recipe.isUserCreated ? (data.recipe.ownerUsername ?? 'Unknown User') : 'Globe Recipes'
@@ -25,34 +24,42 @@
 			<h1 class="mb-2">{data.recipe.title}</h1>
 			<p class="text-secondary mb-4">{data.recipe.description}</p>
 
-			<div class="row g-3 mb-4">
-				<div class="col-md-4">
-					<div class="p-3 rounded border bg-body-tertiary">
+			<div class="row g-3 mb-4 detail-top-grid">
+				<div class="col-lg-4 col-md-6">
+					<div class="p-3 rounded border bg-body-tertiary h-100">
 						<div><strong>Continent:</strong> {data.recipe.continent}</div>
 						<div><strong>Country:</strong> {data.recipe.country}</div>
 						<div class="text-capitalize"><strong>Difficulty:</strong> {data.recipe.difficulty}</div>
 					</div>
 				</div>
-				<div class="col-md-4">
-					<div class="p-3 rounded border bg-body-tertiary">
+				<div class="col-lg-4 col-md-6">
+					<div class="p-3 rounded border bg-body-tertiary h-100">
 						<div><strong>Cooking Time:</strong> {data.recipe.cookingTime} min</div>
 						<div><strong>Servings:</strong> {data.recipe.servings}</div>
 						<div><strong>User Created:</strong> {data.recipe.isUserCreated ? 'Yes' : 'No'}</div>
 					</div>
-					<div class="p-3 rounded border bg-body-tertiary mt-3">
-						<div class="mb-2">
+				</div>
+				<div class="col-lg-4 col-md-12">
+					<div class="p-3 rounded border bg-body-tertiary h-100 d-flex flex-column justify-content-between">
+						<div class="mb-3">
 							<strong>Created by:</strong>
 							{creatorName}
 						</div>
-						<button
-							type="button"
-							class="btn btn-outline-warning btn-sm favorite-button"
-							aria-pressed={isFavorite}
-							aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
-							onclick={() => (isFavorite = !isFavorite)}
-						>
-							{isFavorite ? '★ Favorite' : '☆ Favorite'}
-						</button>
+
+						<form method="POST" action="?/toggleFavorite">
+							<button
+								type="submit"
+								class={`btn btn-sm favorite-button ${data.isFavorite ? 'btn-warning' : 'btn-outline-warning'}`}
+								aria-pressed={data.isFavorite}
+								aria-label={data.isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+							>
+								{data.isFavorite ? '★ Favorite' : '☆ Favorite'}
+							</button>
+						</form>
+
+						{#if !data.currentUserId}
+							<small class="text-secondary mt-2 d-block">Sign in to save favorites.</small>
+						{/if}
 					</div>
 				</div>
 			</div>

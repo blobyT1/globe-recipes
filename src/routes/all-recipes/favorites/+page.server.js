@@ -1,18 +1,16 @@
-import { error, isHttpError, redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import {
 	RecipeDbError,
-	deleteUserCreatedRecipe,
-	getAllRecipes,
 	getFavoriteRecipeIdsForUser,
+	getFavoritedRecipesForUser,
 	toggleRecipeFavorite
 } from '$lib/server/recipes-db.js';
 
 export async function load({ locals }) {
 	try {
 		const currentUserId = locals.user?.id ?? null;
-
 		return {
-			recipes: await getAllRecipes(),
+			recipes: currentUserId ? await getFavoritedRecipesForUser(currentUserId) : [],
 			currentUserId,
 			favoriteRecipeIds: currentUserId ? await getFavoriteRecipeIdsForUser(currentUserId) : []
 		};
@@ -20,14 +18,14 @@ export async function load({ locals }) {
 		if (dbError instanceof RecipeDbError) {
 			throw error(dbError.status, dbError.message);
 		}
-		throw error(500, 'Failed to load recipes.');
+		throw error(500, 'Failed to load favorite recipes.');
 	}
 }
 
 export const actions = {
 	toggleFavorite: async ({ request, locals }) => {
 		if (!locals.user) {
-			throw redirect(303, '/login?next=/all-recipes');
+			throw redirect(303, '/login?next=/all-recipes/favorites');
 		}
 
 		const formData = await request.formData();
@@ -46,36 +44,5 @@ export const actions = {
 			}
 			throw error(500, 'Failed to update favorite.');
 		}
-	},
-
-	delete: async ({ request, locals }) => {
-		if (!locals.user) {
-			throw redirect(303, '/login?next=/all-recipes');
-		}
-
-		const formData = await request.formData();
-		const recipeId = String(formData.get('id') ?? '');
-
-		if (!recipeId) {
-			throw error(400, 'Invalid recipe id');
-		}
-
-		try {
-			const deletedCount = await deleteUserCreatedRecipe(recipeId, locals.user.id);
-			if (deletedCount === 0) {
-				throw error(403, 'You can only delete your own user-created recipes.');
-			}
-		} catch (dbError) {
-			if (isHttpError(dbError)) {
-				throw dbError;
-			}
-
-			if (dbError instanceof RecipeDbError) {
-				throw error(dbError.status, dbError.message);
-			}
-			throw error(500, 'Failed to delete recipe.');
-		}
-
-		return { success: true };
 	}
 };

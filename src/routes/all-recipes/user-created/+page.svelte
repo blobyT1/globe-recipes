@@ -15,16 +15,26 @@
 >
 	<div class="container d-flex justify-content-center">
 		<ContentBox maxWidth="1080px" className="w-100">
-			<h1 class="mb-3">All Recipes</h1>
-			<p class="text-secondary mb-3">Browse all available recipes and open one for full details.</p>
+			<h1 class="mb-3">Your Created Recipes</h1>
+			<p class="text-secondary mb-3">Recipes you created with your account.</p>
 
-			<RecipesViewNav current="all" />
+			<RecipesViewNav current="user-created" />
 
-			<RecipesTable
-				recipes={data.recipes}
-				currentUserId={data.currentUserId}
-				favoriteRecipeIds={data.favoriteRecipeIds}
-			/>
+			{#if !data.currentUserId}
+				<p class="mb-0">
+					<a class="link-primary text-decoration-none fw-semibold" href="/login?next=/all-recipes/user-created">
+						Sign in
+					</a>
+					to view your user-created recipes.
+				</p>
+			{:else}
+				<RecipesTable
+					recipes={data.recipes}
+					currentUserId={data.currentUserId}
+					favoriteRecipeIds={data.favoriteRecipeIds}
+					emptyMessage="You have not created any recipes yet."
+				/>
+			{/if}
 		</ContentBox>
 	</div>
 </PageShell>

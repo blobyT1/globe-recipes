@@ -1,4 +1,6 @@
 <script>
+	import { goto } from '$app/navigation';
+
 	let {
 		recipes = [],
 		currentUserId = null,
@@ -25,6 +27,18 @@
 	function getSortIcon(column) {
 		if (sortColumn !== column) return '<>';
 		return sortDirection === 'asc' ? '^' : 'v';
+	}
+
+	function openRecipeDetails(event, recipeId) {
+		const target = event.target;
+		if (
+			target instanceof Element &&
+			target.closest('.star-cell, .favorite-icon-button, button, a, form, input, select, textarea, label')
+		) {
+			return;
+		}
+
+		goto(`/all-recipes/${recipeId}`);
 	}
 
 	const sortedRecipes = $derived.by(() => {
@@ -81,7 +95,7 @@
 			</thead>
 			<tbody>
 				{#each sortedRecipes as recipe}
-					<tr>
+					<tr onclick={(event) => openRecipeDetails(event, recipe._id)}>
 						<td class="star-cell">
 							<form method="POST" action="?/toggleFavorite">
 								<input type="hidden" name="recipeId" value={recipe._id} />
@@ -109,11 +123,11 @@
 								{recipe.title}
 							</a>
 						</td>
-						<td>{recipe.continent}</td>
-						<td class="text-capitalize">{recipe.difficulty}</td>
-						<td>{recipe.cookingTime} min</td>
+						<td class="row-link-cell">{recipe.continent}</td>
+						<td class="text-capitalize row-link-cell">{recipe.difficulty}</td>
+						<td class="row-link-cell">{recipe.cookingTime} min</td>
 						{#if showDelete}
-							<td>
+							<td class="row-link-cell">
 								{#if recipe.isUserCreated && currentUserId && recipe.ownerId === currentUserId}
 									<form method="POST" action="?/delete">
 										<input type="hidden" name="id" value={recipe._id} />
@@ -150,6 +164,10 @@
 	.star-cell {
 		width: 64px;
 		text-align: center;
+	}
+
+	tbody tr td:not(.star-cell) {
+		cursor: pointer;
 	}
 
 	.favorite-icon-button {

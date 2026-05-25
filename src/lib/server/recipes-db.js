@@ -80,7 +80,7 @@ async function getRecipesCollection() {
 		collectionPromise = (async () => {
 			const db = await getDb();
 			const collection = db.collection(RECIPES_COLLECTION);
-			await collection.createIndex({ owner: 1, isUserCreated: 1 });
+			await collection.createIndex({ ownerId: 1, isUserCreated: 1 });
 			await collection.createIndex({ continent: 1, title: 1 });
 			return collection;
 		})().catch((error) => {
@@ -93,9 +93,15 @@ async function getRecipesCollection() {
 }
 
 function mapRecipe(document) {
+	const ownerId =
+		document.ownerId && typeof document.ownerId?.toString === 'function'
+			? document.ownerId.toString()
+			: document.ownerId ?? null;
+
 	return {
 		...document,
-		_id: document._id.toString()
+		_id: document._id.toString(),
+		ownerId
 	};
 }
 
@@ -138,14 +144,15 @@ export async function createRecipe(recipe) {
 	}
 }
 
-export async function deleteUserCreatedRecipe(id) {
+export async function deleteUserCreatedRecipe(id, ownerId) {
 	try {
-		if (!ObjectId.isValid(id)) return 0;
+		if (!ObjectId.isValid(id) || !ownerId) return 0;
 
 		const collection = await getRecipesCollection();
 		const result = await collection.deleteOne({
 			_id: new ObjectId(id),
-			isUserCreated: true
+			isUserCreated: true,
+			ownerId: String(ownerId)
 		});
 
 		return result.deletedCount;

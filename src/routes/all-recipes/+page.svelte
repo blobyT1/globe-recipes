@@ -90,7 +90,7 @@
 								<td class="text-capitalize">{recipe.difficulty}</td>
 								<td>{recipe.cookingTime} min</td>
 								<td>
-									{#if recipe.isUserCreated}
+									{#if recipe.isUserCreated && data.currentUserId && recipe.ownerId === data.currentUserId}
 										<form method="POST" action="?/delete">
 											<input type="hidden" name="id" value={recipe._id} />
 											<button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>

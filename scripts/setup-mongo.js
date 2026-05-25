@@ -2,6 +2,8 @@ import { MongoClient, MongoServerError } from 'mongodb';
 import { getMongoConfig, getRecipesJsonSchema, loadRootEnvFile } from './mongo-common.js';
 
 const COLLECTION = 'recipes';
+const USERS_COLLECTION = 'users';
+const SESSIONS_COLLECTION = 'sessions';
 
 async function setupMongo() {
 	loadRootEnvFile();
@@ -33,9 +35,19 @@ async function setupMongo() {
 		}
 
 		const collection = db.collection(COLLECTION);
-		await collection.createIndex({ owner: 1, isUserCreated: 1 });
+		await collection.createIndex({ ownerId: 1, isUserCreated: 1 });
 		await collection.createIndex({ continent: 1, title: 1 });
-		console.log('Indexes ensured.');
+		console.log('Recipe indexes ensured.');
+
+		const usersCollection = db.collection(USERS_COLLECTION);
+		await usersCollection.createIndex({ usernameLower: 1 }, { unique: true });
+		console.log("Users index ensured ('usernameLower' unique).");
+
+		const sessionsCollection = db.collection(SESSIONS_COLLECTION);
+		await sessionsCollection.createIndex({ tokenHash: 1 }, { unique: true });
+		await sessionsCollection.createIndex({ expiresAt: 1 }, { expireAfterSeconds: 0 });
+		await sessionsCollection.createIndex({ userId: 1, expiresAt: 1 });
+		console.log('Session indexes ensured.');
 	} catch (error) {
 		if (error instanceof MongoServerError && error.code === 13) {
 			console.error(

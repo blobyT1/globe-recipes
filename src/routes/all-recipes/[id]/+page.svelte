@@ -33,11 +33,10 @@
 						<div><strong>Cooking Time:</strong> {data.recipe.cookingTime} min</div>
 						<div><strong>Servings:</strong> {data.recipe.servings}</div>
 						<div><strong>User Created:</strong> {data.recipe.isUserCreated ? 'Yes' : 'No'}</div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="p-3 rounded border bg-body-tertiary">
-						<div><strong>ID:</strong> {data.recipe._id}</div>
+						<div>
+							<strong>Created by:</strong>
+							{data.recipe.isUserCreated ? (data.recipe.ownerUsername ?? 'Unknown User') : 'Globe Recipes'}
+						</div>
 					</div>
 				</div>
 			</div>

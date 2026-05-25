@@ -1,8 +1,32 @@
 <script>
+	import { onMount } from 'svelte';
+
 	let { id, images = [], aspectRatio = '16 / 9', autoSlide = true, intervalMs = 5000 } = $props();
+	let carouselElement;
+
+	onMount(() => {
+		const BootstrapCarousel = globalThis?.bootstrap?.Carousel;
+		if (!BootstrapCarousel || !carouselElement) return;
+
+		const instance = BootstrapCarousel.getOrCreateInstance(carouselElement, {
+			interval: intervalMs,
+			pause: 'hover',
+			ride: autoSlide ? 'carousel' : false,
+			wrap: true
+		});
+
+		if (autoSlide) {
+			instance.cycle();
+		}
+
+		return () => {
+			instance.dispose();
+		};
+	});
 </script>
 
 <div
+	bind:this={carouselElement}
 	id={id}
 	class="carousel slide mb-4"
 	data-bs-ride={autoSlide ? 'carousel' : undefined}

@@ -1,8 +1,15 @@
 <script>
-	let { id, images = [], aspectRatio = '16 / 9' } = $props();
+	let { id, images = [], aspectRatio = '16 / 9', autoSlide = true, intervalMs = 5000 } = $props();
 </script>
 
-<div id={id} class="carousel slide mb-4" style={`--carousel-ratio: ${aspectRatio};`}>
+<div
+	id={id}
+	class="carousel slide mb-4"
+	data-bs-ride={autoSlide ? 'carousel' : undefined}
+	data-bs-interval={intervalMs}
+	data-bs-pause="hover"
+	style={`--carousel-ratio: ${aspectRatio};`}
+>
 	<div class="carousel-indicators">
 		{#each images as _image, index}
 			<button

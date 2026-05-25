@@ -3,6 +3,11 @@
 	import PageShell from '$lib/components/PageShell.svelte';
 
 	let { data } = $props();
+	let isFavorite = $state(false);
+
+	const creatorName = $derived(
+		data.recipe.isUserCreated ? (data.recipe.ownerUsername ?? 'Unknown User') : 'Globe Recipes'
+	);
 </script>
 
 <PageShell
@@ -33,10 +38,21 @@
 						<div><strong>Cooking Time:</strong> {data.recipe.cookingTime} min</div>
 						<div><strong>Servings:</strong> {data.recipe.servings}</div>
 						<div><strong>User Created:</strong> {data.recipe.isUserCreated ? 'Yes' : 'No'}</div>
-						<div>
+					</div>
+					<div class="p-3 rounded border bg-body-tertiary mt-3">
+						<div class="mb-2">
 							<strong>Created by:</strong>
-							{data.recipe.isUserCreated ? (data.recipe.ownerUsername ?? 'Unknown User') : 'Globe Recipes'}
+							{creatorName}
 						</div>
+						<button
+							type="button"
+							class="btn btn-outline-warning btn-sm favorite-button"
+							aria-pressed={isFavorite}
+							aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+							onclick={() => (isFavorite = !isFavorite)}
+						>
+							{isFavorite ? '★ Favorite' : '☆ Favorite'}
+						</button>
 					</div>
 				</div>
 			</div>
@@ -68,5 +84,9 @@
 		background-color: rgba(20, 24, 31, 0.9);
 		color: #f8f9fa;
 		border-color: rgba(203, 213, 225, 0.2);
+	}
+
+	.favorite-button {
+		min-width: 130px;
 	}
 </style>

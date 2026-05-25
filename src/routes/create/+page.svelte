@@ -3,6 +3,57 @@
 	import PageShell from '$lib/components/PageShell.svelte';
 
 	let { data, form } = $props();
+	const ingredientMax = 140;
+	const instructionMax = 280;
+
+	let ingredientInput = $state('');
+	let instructionInput = $state('');
+	let ingredientsList = $state([]);
+	let instructionsList = $state([]);
+
+	$effect(() => {
+		ingredientsList = Array.isArray(form?.values?.ingredients) ? [...form.values.ingredients] : [];
+		instructionsList = Array.isArray(form?.values?.instructions) ? [...form.values.instructions] : [];
+	});
+
+	const ingredientsJson = $derived(JSON.stringify(ingredientsList));
+	const instructionsJson = $derived(JSON.stringify(instructionsList));
+
+	function addIngredient() {
+		const value = ingredientInput.trim();
+		if (!value) return;
+		if (value.length > ingredientMax) return;
+		ingredientsList.push(value);
+		ingredientInput = '';
+	}
+
+	function addInstruction() {
+		const value = instructionInput.trim();
+		if (!value) return;
+		if (value.length > instructionMax) return;
+		instructionsList.push(value);
+		instructionInput = '';
+	}
+
+	function removeIngredient(index) {
+		ingredientsList.splice(index, 1);
+	}
+
+	function removeInstruction(index) {
+		instructionsList.splice(index, 1);
+	}
+
+	function onIngredientKeydown(event) {
+		if (event.key !== 'Enter') return;
+		event.preventDefault();
+		addIngredient();
+	}
+
+	function onInstructionKeydown(event) {
+		if (event.key !== 'Enter') return;
+		event.preventDefault();
+		addInstruction();
+	}
 </script>
 
 <PageShell
@@ -21,6 +72,9 @@
 			{/if}
 
 			<form method="POST" class="row g-3">
+				<input type="hidden" name="ingredientsJson" value={ingredientsJson} />
+				<input type="hidden" name="instructionsJson" value={instructionsJson} />
+
 				<div class="col-md-6">
 					<label class="form-label" for="title">Title</label>
 					<input
@@ -29,8 +83,10 @@
 						id="title"
 						name="title"
 						value={form?.values?.title ?? ''}
+						maxlength="80"
 						required
 					/>
+					<div class="form-text">Max 80 characters.</div>
 				</div>
 				<div class="col-md-6">
 					<label class="form-label" for="continent">Continent</label>
@@ -44,14 +100,12 @@
 
 				<div class="col-md-6">
 					<label class="form-label" for="country">Country</label>
-					<input
-						class="form-control"
-						type="text"
-						id="country"
-						name="country"
-						value={form?.values?.country ?? ''}
-						required
-					/>
+					<select class="form-select" id="country" name="country" required>
+						<option value="" selected={!(form?.values?.country ?? '')}>Select country</option>
+						{#each data.countries as country}
+							<option value={country} selected={form?.values?.country === country}>{country}</option>
+						{/each}
+					</select>
 				</div>
 				<div class="col-md-3">
 					<label class="form-label" for="cookingTime">Cooking Time (min)</label>
@@ -59,11 +113,13 @@
 						class="form-control"
 						type="number"
 						min="1"
+						max="1440"
 						id="cookingTime"
 						name="cookingTime"
 						value={form?.values?.cookingTime ?? ''}
 						required
 					/>
+					<div class="form-text">1-1440 minutes.</div>
 				</div>
 				<div class="col-md-3">
 					<label class="form-label" for="servings">Servings</label>
@@ -71,11 +127,13 @@
 						class="form-control"
 						type="number"
 						min="1"
+						max="50"
 						id="servings"
 						name="servings"
 						value={form?.values?.servings ?? ''}
 						required
 					/>
+					<div class="form-text">1-50 servings.</div>
 				</div>
 
 				<div class="col-md-6">
@@ -94,33 +152,91 @@
 						id="description"
 						name="description"
 						rows="3"
+						maxlength="500"
 						required
 					>{form?.values?.description ?? ''}</textarea>
+					<div class="form-text">Max 500 characters.</div>
 				</div>
 				<div class="col-md-6">
-					<label class="form-label" for="ingredients">Ingredients (one per line)</label>
-					<textarea
-						class="form-control"
-						id="ingredients"
-						name="ingredients"
-						rows="7"
-						required
-					>{form?.values?.ingredients ?? ''}</textarea>
+					<label class="form-label" for="ingredientInput">Ingredients</label>
+					<div class="input-group">
+						<input
+							class="form-control"
+							type="text"
+							id="ingredientInput"
+							bind:value={ingredientInput}
+							maxlength={ingredientMax}
+							onkeydown={onIngredientKeydown}
+							placeholder="Type one ingredient and confirm"
+						/>
+						<button class="btn btn-outline-primary" type="button" onclick={addIngredient}>Add</button>
+					</div>
+					<div class="form-text">Confirm each ingredient before adding the next one.</div>
+
+					<ul class="list-group mt-2">
+						{#if ingredientsList.length === 0}
+							<li class="list-group-item text-secondary">No ingredients added yet.</li>
+						{:else}
+							{#each ingredientsList as ingredient, index}
+								<li class="list-group-item d-flex justify-content-between align-items-start gap-2">
+									<span>{ingredient}</span>
+									<button
+										class="btn btn-sm btn-outline-danger"
+										type="button"
+										onclick={() => removeIngredient(index)}
+									>
+										Remove
+									</button>
+								</li>
+							{/each}
+						{/if}
+					</ul>
 				</div>
 				<div class="col-md-6">
-					<label class="form-label" for="instructions">Instructions (one per line)</label>
-					<textarea
-						class="form-control"
-						id="instructions"
-						name="instructions"
-						rows="7"
-						required
-					>{form?.values?.instructions ?? ''}</textarea>
+					<label class="form-label" for="instructionInput">Instructions</label>
+					<div class="input-group">
+						<input
+							class="form-control"
+							type="text"
+							id="instructionInput"
+							bind:value={instructionInput}
+							maxlength={instructionMax}
+							onkeydown={onInstructionKeydown}
+							placeholder="Type one instruction and confirm"
+						/>
+						<button class="btn btn-outline-primary" type="button" onclick={addInstruction}>Add</button>
+					</div>
+					<div class="form-text">Confirm each instruction before adding the next one.</div>
+
+					<ol class="list-group list-group-numbered mt-2">
+						{#if instructionsList.length === 0}
+							<li class="list-group-item text-secondary">No instructions added yet.</li>
+						{:else}
+							{#each instructionsList as instruction, index}
+								<li class="list-group-item d-flex justify-content-between align-items-start gap-2">
+									<span>{instruction}</span>
+									<button
+										class="btn btn-sm btn-outline-danger"
+										type="button"
+										onclick={() => removeInstruction(index)}
+									>
+										Remove
+									</button>
+								</li>
+							{/each}
+						{/if}
+					</ol>
 				</div>
 
 				<div class="col-12 d-flex flex-column flex-sm-row justify-content-sm-end gap-2 pt-2">
 					<a class="btn btn-outline-secondary" href="/all-recipes">Go to All Recipes</a>
-					<button class="btn btn-primary" type="submit">Save Recipe</button>
+					<button
+						class="btn btn-primary"
+						type="submit"
+						disabled={ingredientsList.length === 0 || instructionsList.length === 0}
+					>
+						Save Recipe
+					</button>
 				</div>
 			</form>
 		</ContentBox>

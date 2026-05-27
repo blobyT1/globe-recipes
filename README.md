@@ -21,19 +21,60 @@
 
 <!-- Diese Vorlage ist für eine README.md im Repository gedacht. Abschnitte mit [Optional] können weggelassen werden, wenn in den Übungen nichts anderes verlangt wird. -->
 
-## 1. Ausgangslage
-Kurz beschreiben, welches Problem adressiert wird und welches Ergebnis angestrebt ist. Wem nützt die Lösung, wer ist beteiligt oder betroffen?
-- **Problem:** _[Das Problem ist identifiziert, verständlich beschrieben und optional mit Beispielen illustriert]_  
-- **Ziele:** _[stichwortartig oder einige Sätze]_  
-- **Primäre Zielgruppe:** _[kurz beschreiben]_  
-- **Weitere Stakeholder [Optional]:** _[z. B. Verwaltung, Geschäftsleitung]_  
+## 1. Ausgangslage <!--DONE-->
+<!-- Kurz beschreiben, welches Problem adressiert wird und welches Ergebnis angestrebt ist. Wem nützt die Lösung, wer ist beteiligt oder betroffen? -->
+- **Problem:** Viele Menschen interessieren sich fuer internationale Kuechen, finden aber alltagsnah oft nur verstreute, uneinheitliche oder schwer vergleichbare Rezeptinformationen. Gleichzeitig fehlen in bestehenden Sammlungen haeufig eine klare thematische Navigation (z. B. nach Kontinenten), ein einfacher Zugang zu Rezeptdetails und die Moeglichkeit, eigene Rezepte strukturiert zu erfassen und wiederzufinden. Dadurch entsteht ein Bruch zwischen Inspiration und praktischer Umsetzung beim Kochen.  
+- **Ziele:**  
+  - Eine uebersichtliche, responsive Webanwendung bereitstellen, die Rezepte ueber Kontinente hinweg strukturiert zugaenglich macht.  
+  - Nutzer:innen ermoeglichen, eigene Rezepte zu erstellen, zu verwalten und wieder zu loeschen.  
+  - Eine intuitive Navigation zwischen Inspirationsansicht (Kontinente), Gesamtliste und Detailansicht schaffen.  
+  - Mit Login- und Favoritenfunktion einen persoenlichen Nutzen und wiederkehrende Nutzung unterstuetzen.  
+  - Eine solide technische Basis mit SvelteKit, Bootstrap und MongoDB fuer weitere Erweiterungen schaffen.  
+- **Primaere Zielgruppe:** Kochinteressierte Nutzer:innen, insbesondere Studierende und junge Erwachsene, die schnell internationale Gerichte entdecken, vergleichen und teilweise selbst kuratieren wollen.  
+<!-- - **Weitere Stakeholder [Optional]:** Dozierende und Mitstudierende im Modul Prototyping (Feedback, Evaluation, Bewertung) sowie Testnutzer:innen, die Usability-Rueckmeldungen liefern. -->  
 
 
 ## 2. Lösungsidee
 Beschreibt die Lösungsidee.
-- **Kernfunktionalität:** _[Workflows kurz nennen und optional illustrieren]_  
-- **Annahmen [Optional]:** _[welche Hypothesen werden geprüft?]_
-- **Abgrenzung [Optional]:** _[Was gehört explizit nicht zum Umfang?]_
+- **Kernfunktionalitaet:**
+  - **Version 1 (ausformuliert):**
+    1. **Entdecken ueber die Startseite und Kontinente:** Nutzer:innen starten auf der Home-Seite mit sechs Kontinent-Kacheln und gelangen von dort in kontinent-spezifische Seiten. Jede Kontinentseite bietet Einordnungstexte, Bilder und einen Carousel-Bereich, um kulinarische Kontexte schnell erfassbar zu machen.
+    2. **Navigation zwischen Kontinenten und Hauptbereichen:** Ueber die globale Navigation (inkl. Continents-Dropdown) kann zwischen Home, Kontinenten, Create, All Recipes und About gewechselt werden. Dadurch ist sowohl exploratives Browsing als auch zielgerichtete Suche moeglich.
+    3. **Rezepte als Gesamtliste nutzen:** In All Recipes werden alle vorhandenen Rezepte tabellarisch angezeigt. Die Spalten (z. B. Titel, Kontinent, Difficulty, Cooking Time) sind sortierbar, damit Nutzer:innen Rezepte schnell nach relevanten Kriterien ordnen koennen.
+    4. **Direkter Detailzugriff aus der Liste:** Die Rezeptzeilen sind weitgehend klickbar und fuehren in die jeweilige Detailansicht. Dort werden Beschreibung, Metadaten, Zutaten, Schritte, Quelle/Ersteller sowie Favoritenstatus angezeigt.
+    5. **Kontobezogene Nutzung (Sign-up/Login):** Nutzer:innen koennen ein Konto erstellen und sich einloggen. Die Sitzung wird serverseitig ueber Sessions verwaltet, damit geschuetzte Funktionen nur authentifizierten Nutzer:innen zur Verfuegung stehen.
+    6. **Eigene Rezepte erstellen:** Auf der Create-Seite koennen eingeloggte Nutzer:innen Rezepte mit validierten Eingaben erstellen (u. a. Titel, Kontinent, Land, Beschreibung, Zutaten, Anweisungen, Difficulty, Zeit, Portionen). Ingredients und Instructions werden strukturiert als Liste erfasst.
+    7. **Eigene Inhalte verwalten:** User-created Rezepte erscheinen in der Gesamtliste und in der Unteransicht User Created. Eigene Rezepte koennen geloescht werden; das Loeschen ist auf den/die jeweilige:n Owner:in beschraenkt.
+    8. **Favoriten verwalten:** Rezepte koennen ueber das Sternsymbol als Favorit markiert bzw. entmarkiert werden (Liste und Detailseite). Favoriten werden persistent in MongoDB gespeichert und in der Unteransicht Favorites gefiltert dargestellt.
+    9. **Mehrere Rezeptansichten als Workflow:** In All Recipes koennen Nutzer:innen zwischen drei Ansichten wechseln: All Recipes, User Created und Favorites. So wird zwischen Entdecken, eigenen Inhalten und persoenlicher Kuratierung sauber getrennt.
+    10. **Deploybare Webanwendung:** Das Projekt ist fuer Netlify-Deployment vorbereitet, sodass die Workflows nicht nur lokal, sondern als veroeffentlichter Web-Prototyp genutzt und validiert werden koennen.
+
+  - **Version 2 (kurz genannt):**
+    - Kontinente entdecken (Home-Kacheln + Kontinentseiten mit Carousel).
+    - Global navigieren (Navbar + Continents-Dropdown).
+    - Alle Rezepte tabellarisch anzeigen und sortieren.
+    - In Rezept-Detailseiten wechseln und Inhalte lesen.
+    - Konto erstellen, einloggen, Session nutzen.
+    - Eigene Rezepte erstellen (validierte Formulareingaben).
+    - Eigene Rezepte in separater Ansicht sehen und loeschen (owner-basiert).
+    - Favoriten per Stern setzen/entfernen (persistent in MongoDB).
+    - Zwischen All Recipes, User Created und Favorites wechseln.
+
+- **Annahmen [Optional]:**
+  - Nutzer:innen moechten internationale Rezepte nicht nur lesen, sondern auch persoenlich sammeln (Favoriten) und eigene Inhalte beisteuern.
+  - Eine kontinent-basierte Struktur erleichtert den Einstieg besser als eine rein lange, ungefilterte Rezeptliste.
+  - Sortierbarkeit in der Tabelle ist fuer den ersten Prototyp nutzbringender als komplexe Filter- oder Suchlogik.
+  - Ein einfacher Account-Flow (Sign-up/Login) reicht fuer den Prototyp aus, um geschuetzte User-Flows realistisch zu testen.
+  - Persistenz in MongoDB ist notwendig, damit Inhalte und Favoriten ueber Sessions und Deployments hinweg stabil verfuegbar bleiben.
+
+- **Abgrenzung [Optional]:**
+  - Kein Image-Upload fuer eigene Rezepte (weder im Create-Formular noch in der Detailansicht).
+  - Keine Bearbeiten-Funktion (Edit) fuer bestehende Rezepte im aktuellen Stand.
+  - Keine Volltextsuche oder facettierte Mehrfachfilter (z. B. nach Zutaten, Kochzeitbereich, Allergenen).
+  - Keine erweiterten Rollen/Rechte (z. B. Admin-Backoffice, Moderation, Freigabeworkflow).
+  - Kein Passwort-Reset, keine E-Mail-Verifikation und kein Social Login.
+  - Keine Mengenumrechnung, kein Einkaufslisten-Export, keine Naehrwertberechnung.
+  - Kein Offline-Modus und keine native Mobile-App.
 
 ## 3. Vorgehen & Artefakte
 Die Durchführung erfolgt phasenbasiert; dokumentieren Sie die wichtigsten Ergebnisse je Phase.

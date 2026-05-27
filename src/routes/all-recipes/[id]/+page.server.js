@@ -1,6 +1,7 @@
 import { error, redirect } from '@sveltejs/kit';
 import {
 	RecipeDbError,
+	deleteUserCreatedRecipe,
 	getRecipeById,
 	isRecipeFavoritedByUser,
 	toggleRecipeFavorite
@@ -54,6 +55,28 @@ export const actions = {
 				throw error(dbError.status, dbError.message);
 			}
 			throw error(500, 'Failed to update favorite.');
+		}
+	},
+
+	delete: async ({ params, locals }) => {
+		if (!locals.user) {
+			throw redirect(303, `/login?next=/all-recipes/${params.id}`);
+		}
+
+		try {
+			const deletedCount = await deleteUserCreatedRecipe(params.id, locals.user.id);
+			if (deletedCount === 0) {
+				throw error(403, 'You can only delete your own user-created recipes.');
+			}
+			throw redirect(303, '/all-recipes');
+		} catch (dbError) {
+			if (dbError?.status) {
+				throw dbError;
+			}
+			if (dbError instanceof RecipeDbError) {
+				throw error(dbError.status, dbError.message);
+			}
+			throw error(500, 'Failed to delete recipe.');
 		}
 	}
 };

@@ -1,12 +1,41 @@
 <script>
 	import ContentBox from '$lib/components/ContentBox.svelte';
+	import ConfirmDeleteModal from '$lib/components/ConfirmDeleteModal.svelte';
 	import PageShell from '$lib/components/PageShell.svelte';
 
 	let { data } = $props();
+	let showDeleteConfirm = $state(false);
+	let allowDeleteSubmit = $state(false);
+	let pendingDeleteForm = $state(null);
 
 	const creatorName = $derived(
 		data.recipe.isUserCreated ? (data.recipe.ownerUsername ?? 'Unknown User') : 'Globe Recipes'
 	);
+
+	function requestDeleteConfirmation(event) {
+		if (allowDeleteSubmit) {
+			allowDeleteSubmit = false;
+			return;
+		}
+
+		event.preventDefault();
+		pendingDeleteForm = event.currentTarget;
+		showDeleteConfirm = true;
+	}
+
+	function cancelDeleteConfirmation() {
+		showDeleteConfirm = false;
+		pendingDeleteForm = null;
+	}
+
+	function confirmDelete() {
+		if (!pendingDeleteForm) return;
+		const form = pendingDeleteForm;
+		showDeleteConfirm = false;
+		pendingDeleteForm = null;
+		allowDeleteSubmit = true;
+		form.requestSubmit();
+	}
 </script>
 
 <PageShell
@@ -18,7 +47,7 @@
 	<div class="container d-flex justify-content-center">
 		<ContentBox maxWidth="1080px" className="w-100">
 			<div class="mb-3">
-				<a class="link-primary text-decoration-none" href="/all-recipes">Back to all recipes</a>
+				<a class="back-link text-decoration-none" href="/all-recipes">Back to all recipes</a>
 			</div>
 
 			<h1 class="mb-2">{data.recipe.title}</h1>
@@ -46,16 +75,37 @@
 							{creatorName}
 						</div>
 
-						<form method="POST" action="?/toggleFavorite">
-							<button
-								type="submit"
-								class={`btn btn-sm favorite-button ${data.isFavorite ? 'btn-warning' : 'btn-outline-warning'}`}
-								aria-pressed={data.isFavorite}
-								aria-label={data.isFavorite ? 'Remove from favorites' : 'Add to favorites'}
-							>
-								{data.isFavorite ? '★ Favorite' : '☆ Favorite'}
-							</button>
-						</form>
+						<div class="recipe-actions">
+							<form method="POST" action="?/toggleFavorite">
+								<div class="d-flex flex-wrap gap-2">
+									<button
+										type="submit"
+										class={`btn btn-sm favorite-button ${data.isFavorite ? 'btn-warning' : 'btn-outline-warning'}`}
+										aria-pressed={data.isFavorite}
+										aria-label={data.isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+									>
+										{data.isFavorite ? '★ Favorite' : '☆ Favorite'}
+									</button>
+
+									{#if data.currentUserId && data.recipe.isUserCreated && data.recipe.ownerId === data.currentUserId}
+										<a class="btn btn-sm btn-outline-secondary" href={`/all-recipes/${data.recipe._id}/edit`}>
+											Edit Recipe
+										</a>
+									{/if}
+								</div>
+							</form>
+
+							{#if data.currentUserId && data.recipe.isUserCreated && data.recipe.ownerId === data.currentUserId}
+								<form
+									method="POST"
+									action="?/delete"
+									class="mt-2"
+									onsubmit={requestDeleteConfirmation}
+								>
+									<button type="submit" class="btn btn-sm btn-outline-danger w-100">Delete Recipe</button>
+								</form>
+							{/if}
+						</div>
 
 						{#if !data.currentUserId}
 							<small class="text-secondary mt-2 d-block">Sign in to save favorites.</small>
@@ -86,6 +136,12 @@
 	</div>
 </PageShell>
 
+<ConfirmDeleteModal
+	open={showDeleteConfirm}
+	onCancel={cancelDeleteConfirmation}
+	onConfirm={confirmDelete}
+/>
+
 <style>
 	:global(html[data-bs-theme='dark'] .list-group-item) {
 		background-color: rgba(20, 24, 31, 0.9);
@@ -95,5 +151,23 @@
 
 	.favorite-button {
 		min-width: 130px;
+	}
+
+	.recipe-actions {
+		display: inline-flex;
+		flex-direction: column;
+		align-items: stretch;
+		max-width: 100%;
+	}
+
+	.back-link {
+		color: var(--brand-primary);
+		font-weight: 500;
+	}
+
+	.back-link:hover,
+	.back-link:focus-visible {
+		color: var(--brand-primary-hover);
+		text-decoration: underline;
 	}
 </style>

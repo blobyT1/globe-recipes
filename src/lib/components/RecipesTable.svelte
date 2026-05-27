@@ -1,5 +1,6 @@
 <script>
 	import { goto } from '$app/navigation';
+	import ConfirmDeleteModal from '$lib/components/ConfirmDeleteModal.svelte';
 
 	let {
 		recipes = [],
@@ -11,6 +12,9 @@
 
 	let sortColumn = $state('title');
 	let sortDirection = $state('asc');
+	let showDeleteConfirm = $state(false);
+	let allowDeleteSubmit = $state(false);
+	let pendingDeleteForm = $state(null);
 
 	const favoriteIdSet = $derived(new Set((favoriteRecipeIds ?? []).map((id) => String(id))));
 
@@ -39,6 +43,32 @@
 		}
 
 		goto(`/all-recipes/${recipeId}`);
+	}
+
+	function requestDeleteConfirmation(event) {
+		if (allowDeleteSubmit) {
+			allowDeleteSubmit = false;
+			return;
+		}
+
+		event.preventDefault();
+		pendingDeleteForm = event.currentTarget;
+		showDeleteConfirm = true;
+	}
+
+	function cancelDeleteConfirmation() {
+		showDeleteConfirm = false;
+		pendingDeleteForm = null;
+	}
+
+	function confirmDelete() {
+		if (!pendingDeleteForm) return;
+
+		const form = pendingDeleteForm;
+		showDeleteConfirm = false;
+		pendingDeleteForm = null;
+		allowDeleteSubmit = true;
+		form.requestSubmit();
 	}
 
 	const sortedRecipes = $derived.by(() => {
@@ -119,7 +149,7 @@
 							</form>
 						</td>
 						<td>
-							<a class="link-primary text-decoration-none fw-semibold" href={`/all-recipes/${recipe._id}`}>
+							<a class="recipe-title-link text-decoration-none fw-semibold" href={`/all-recipes/${recipe._id}`}>
 								{recipe.title}
 							</a>
 						</td>
@@ -129,10 +159,15 @@
 						{#if showDelete}
 							<td class="row-link-cell">
 								{#if recipe.isUserCreated && currentUserId && recipe.ownerId === currentUserId}
-									<form method="POST" action="?/delete">
-										<input type="hidden" name="id" value={recipe._id} />
-										<button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-									</form>
+									<div class="d-flex flex-wrap gap-2">
+										<a class="btn btn-sm btn-outline-secondary" href={`/all-recipes/${recipe._id}/edit`}>
+											Edit
+										</a>
+										<form method="POST" action="?/delete" onsubmit={requestDeleteConfirmation}>
+											<input type="hidden" name="id" value={recipe._id} />
+											<button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+										</form>
+									</div>
 								{:else}
 									<span class="text-secondary">-</span>
 								{/if}
@@ -144,6 +179,12 @@
 		</table>
 	</div>
 {/if}
+
+<ConfirmDeleteModal
+	open={showDeleteConfirm}
+	onCancel={cancelDeleteConfirmation}
+	onConfirm={confirmDelete}
+/>
 
 <style>
 	.sort-button {
@@ -186,5 +227,15 @@
 
 	:global(html[data-bs-theme='dark'] .favorite-icon-button[disabled]) {
 		color: #64748b;
+	}
+
+	.recipe-title-link {
+		color: var(--brand-primary);
+	}
+
+	.recipe-title-link:hover,
+	.recipe-title-link:focus-visible {
+		color: var(--brand-primary-hover);
+		text-decoration: underline;
 	}
 </style>

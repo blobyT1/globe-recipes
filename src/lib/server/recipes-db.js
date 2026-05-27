@@ -260,6 +260,31 @@ export async function createRecipe(recipe) {
 	}
 }
 
+export async function updateUserCreatedRecipe(id, ownerId, updates) {
+	try {
+		if (!ObjectId.isValid(id) || !ownerId) return 0;
+
+		const collection = await getRecipesCollection();
+		const result = await collection.updateOne(
+			{
+				_id: new ObjectId(id),
+				isUserCreated: true,
+				ownerId: String(ownerId)
+			},
+			{
+				$set: {
+					...updates,
+					updatedAt: new Date()
+				}
+			}
+		);
+
+		return result.matchedCount;
+	} catch (error) {
+		throw asRecipeDbError(error, 'Could not update the recipe.');
+	}
+}
+
 export async function deleteUserCreatedRecipe(id, ownerId) {
 	try {
 		if (!ObjectId.isValid(id) || !ownerId) return 0;

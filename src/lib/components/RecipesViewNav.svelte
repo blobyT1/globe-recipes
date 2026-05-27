@@ -21,3 +21,20 @@
 		</li>
 	{/each}
 </ul>
+
+<style>
+	.nav-pills .nav-link {
+		color: var(--brand-primary);
+	}
+
+	.nav-pills .nav-link:hover,
+	.nav-pills .nav-link:focus-visible {
+		color: var(--brand-primary-hover);
+		background-color: rgba(201, 106, 61, 0.12);
+	}
+
+	.nav-pills .nav-link.active {
+		background-color: var(--brand-primary);
+		color: #fff;
+	}
+</style>

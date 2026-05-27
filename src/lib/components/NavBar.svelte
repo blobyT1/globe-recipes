@@ -104,4 +104,16 @@
 			margin-top: 0.5rem;
 		}
 	}
+
+	:global(.navbar .dropdown-item:active),
+	:global(.navbar .dropdown-item.active) {
+		background-color: var(--brand-primary);
+		color: #fff;
+	}
+
+	:global(.navbar .dropdown-item:hover),
+	:global(.navbar .dropdown-item:focus-visible) {
+		background-color: rgba(201, 106, 61, 0.12);
+		color: var(--brand-primary-hover);
+	}
 </style>

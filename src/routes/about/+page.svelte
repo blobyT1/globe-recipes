@@ -25,12 +25,6 @@
 				noodle and rice dishes. Oceania combines fresh coastal flavors with modern creativity and local
 				seasonal produce.
 			</p>
-			<p>
-				Along the way, Globe Recipes shares famous dishes, cultural context, and fun trivia, including
-				little facts you might not expect, like breakfast traditions that change from valley to valley or
-				celebration foods prepared only once a year. The goal is to keep learning lighthearted, welcoming,
-				and full of curiosity.
-			</p>
 			<p class="mb-0">
 				This website is a project as part of the study subject
 				<strong>"Prototyping"</strong>, which is taught at <strong>ZHAW, Zurich University of Applied Sciences</strong>.

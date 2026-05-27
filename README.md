@@ -1,9 +1,9 @@
-# Projektdokumentation - [Projekttitel]
+﻿# Projektdokumentation - [Projekttitel]
 
 ## Inhaltsverzeichnis
 
 1. [Ausgangslage](#1-ausgangslage)
-2. [Lösungsidee](#2-lösungsidee)
+2. [LÃ¶sungsidee](#2-lÃ¶sungsidee)
 3. [Vorgehen & Artefakte](#3-vorgehen--artefakte)
     1. [Understand & Define](#31-understand--define)
     2. [Sketch](#32-sketch)
@@ -17,12 +17,12 @@
 
 > **Hinweis:** Massgeblich sind die im **Unterricht** und auf **Moodle** kommunizierten Anforderungen.
 
-<!-- WICHTIG: DIE KAPITELSTRUKTUR DARF NICHT VERÄNDERT WERDEN! -->
+<!-- WICHTIG: DIE KAPITELSTRUKTUR DARF NICHT VERÃ„NDERT WERDEN! -->
 
-<!-- Diese Vorlage ist für eine README.md im Repository gedacht. Abschnitte mit [Optional] können weggelassen werden, wenn in den Übungen nichts anderes verlangt wird. -->
+<!-- Diese Vorlage ist fÃ¼r eine README.md im Repository gedacht. Abschnitte mit [Optional] kÃ¶nnen weggelassen werden, wenn in den Ãœbungen nichts anderes verlangt wird. -->
 
 ## 1. Ausgangslage <!--DONE-->
-<!-- Kurz beschreiben, welches Problem adressiert wird und welches Ergebnis angestrebt ist. Wem nützt die Lösung, wer ist beteiligt oder betroffen? -->
+<!-- Kurz beschreiben, welches Problem adressiert wird und welches Ergebnis angestrebt ist. Wem nÃ¼tzt die LÃ¶sung, wer ist beteiligt oder betroffen? -->
 - **Problem:** Viele Menschen interessieren sich fuer internationale Kuechen, finden aber alltagsnah oft nur verstreute, uneinheitliche oder schwer vergleichbare Rezeptinformationen. Gleichzeitig fehlen in bestehenden Sammlungen haeufig eine klare thematische Navigation (z. B. nach Kontinenten), ein einfacher Zugang zu Rezeptdetails und die Moeglichkeit, eigene Rezepte strukturiert zu erfassen und wiederzufinden. Dadurch entsteht ein Bruch zwischen Inspiration und praktischer Umsetzung beim Kochen.  
 - **Ziele:**  
   - Eine uebersichtliche, responsive Webanwendung bereitstellen, die Rezepte ueber Kontinente hinweg strukturiert zugaenglich macht.  
@@ -34,8 +34,8 @@
 <!-- - **Weitere Stakeholder [Optional]:** Dozierende und Mitstudierende im Modul Prototyping (Feedback, Evaluation, Bewertung) sowie Testnutzer:innen, die Usability-Rueckmeldungen liefern. -->  
 
 
-## 2. Lösungsidee
-Beschreibt die Lösungsidee.
+## 2. LÃ¶sungsidee
+<!-- Beschreibt die LÃ¶sungsidee. -->
 - **Kernfunktionalitaet:**
   - **Version 1 (ausformuliert):**
     1. **Entdecken ueber die Startseite und Kontinente:** Nutzer:innen starten auf der Home-Seite mit sechs Kontinent-Kacheln und gelangen von dort in kontinent-spezifische Seiten. Jede Kontinentseite bietet Einordnungstexte, Bilder und einen Carousel-Bereich, um kulinarische Kontexte schnell erfassbar zu machen.
@@ -64,6 +64,7 @@ Beschreibt die Lösungsidee.
     - Zwischen All Recipes, User Created und Favorites wechseln.
 
   - **Workflow-Illustration (Mermaid):**
+  - **Gesamtworkflow (Navigation + Kernnutzung):** Diese Darstellung zeigt den typischen Hauptpfad von der Startseite ueber Kontinente und All Recipes bis zur Detailansicht inklusive Suche/Filter, Sortierung und Favoriteninteraktion.
 
 ```mermaid
 flowchart TD
@@ -87,6 +88,8 @@ flowchart TD
   G --> G3[Zurueck zur Liste]
 ```
 
+  - **Auth- und Owner-Workflow (Create/Edit/Delete):** Dieser Block zeigt, wie geschuetzte Aktionen ueber Login/Session abgesichert sind und dass Bearbeiten/Loeschen nur fuer eigene (owner-basierte) Rezepte erlaubt ist.
+
 ```mermaid
 flowchart TD
   A[Unauthenticated User] --> B{Create / Edit / Delete?}
@@ -109,6 +112,8 @@ flowchart TD
   O -->|Confirm| P[Rezept loeschen + Favoriten-Referenzen bereinigen]
   O -->|Cancel| Q[Keine Aenderung]
 ```
+
+  - **Favoriten-Workflow:** Diese Darstellung beschreibt den Ablauf des Favoriten-Toggles (Liste/Detailseite), die Pruefung auf eingeloggte Nutzer:innen und die persistente Speicherung in MongoDB mit Ausgabe in der Favorites-Ansicht.
 
 ```mermaid
 flowchart TD
@@ -138,18 +143,58 @@ flowchart TD
   - Kein Offline-Modus und keine native Mobile-App.
 
 ## 3. Vorgehen & Artefakte
-Die Durchführung erfolgt phasenbasiert; dokumentieren Sie die wichtigsten Ergebnisse je Phase.
+Die DurchfÃ¼hrung erfolgt phasenbasiert; dokumentieren Sie die wichtigsten Ergebnisse je Phase.
 
 ### 3.1 Understand & Define
-- **Zielgruppenverständnis:** _[Problemraumanalyse, Recherche, (Proto-)Personas]_
-- **Wesentliche Erkenntnisse:** _[Stichpunkte]_
+- **Zielgruppenverständnis:**
+  - **Problemraumanalyse (kurz):** In der Analysephase wurde deutlich, dass viele Rezeptplattformen entweder sehr viele Inhalte ohne klare Struktur bieten oder kaum Moeglichkeit zur persoenlichen Organisation geben. Fuer Globe Recipes wurde deshalb ein nutzerzentrierter Fokus auf Orientierung (Kontinente), persoenliche Kuratierung (Favoriten) und aktive Mitgestaltung (eigene Rezepte) gesetzt.
+  - **Methodischer Ansatz (Understand/Define):** Angelehnt an Human-Centered Design wurden Zielgruppe, Nutzungskontext, Aufgaben und Frustpunkte zuerst hypothetisch ueber Proto-Personas beschrieben und danach in konkrete Produktanforderungen uebersetzt (Navigation, Listenansichten, Authentifizierung, Create/Edit/Delete, Such- und Filterlogik).
+  - **Proto-Personas (Template-basiert):**
+
+    - **Proto-Persona 1: Lena Hobbykoechin**
+
+      | Feld | Inhalt |
+      |---|---|
+      | **Name und persoenliche Attribute** | Lena, 25 Jahre, Studentin, digital affin, kocht 3-4x pro Woche |
+      | **Umfeld ("Kontext")** | Kocht zuhause mit Smartphone/Laptop, meist abends, begrenztes Budget |
+      | **Ziele** | Neue internationale Rezepte entdecken; abwechslungsreich kochen; Rezepte schnell vergleichen |
+      | **Aufgaben** | Nach Kontinent/Thema browsen; Rezeptdetails lesen; Favoriten speichern fuer spaeter |
+      | **Frustpunkte** | Immer gleiche Vorschlaege auf grossen Plattformen; unuebersichtliche Trefferlisten; zu viel Werbung/Noise |
+
+    - **Proto-Persona 2: Marco Food Explorer**
+
+      | Feld | Inhalt |
+      |---|---|
+      | **Name und persoenliche Attribute** | Marco, 32 Jahre, berufstaetig, wenig Zeit unter der Woche, neugierig auf neue Kuechen |
+      | **Umfeld ("Kontext")** | Kocht hauptsaechlich am Wochenende, nutzt vor allem Mobile, sucht schnell Inspiration |
+      | **Ziele** | In kurzer Zeit passende Rezepte finden; nach Schwierigkeitsgrad/Kochzeit filtern; Favoritenliste aufbauen |
+      | **Aufgaben** | All-Recipes-Liste nutzen; sortieren/filtern; in Detailseiten wechseln und Rezepte speichern |
+      | **Frustpunkte** | Zu viele Optionen ohne Fokus; fehlende Filterbarkeit; schwer nachvollziehbare Rezeptqualitaet |
+
+    - **Proto-Persona 3: Sara Familienmanagerin**
+
+      | Feld | Inhalt |
+      |---|---|
+      | **Name und persoenliche Attribute** | Sara, 40 Jahre, Mutter, organisiert Mahlzeiten fuer Familie, praxisorientiert |
+      | **Umfeld ("Kontext")** | Plant mehrere Gerichte pro Woche, nutzt Tablet/Notebook zuhause |
+      | **Ziele** | Strukturierte Sammlung verlaesslicher Rezepte; einfache Wiederauffindbarkeit; eigene Rezepte dokumentieren |
+      | **Aufgaben** | Eigene Rezepte erstellen/bearbeiten; in User-Created verwalten; nicht mehr benoetigte Rezepte loeschen |
+      | **Frustpunkte** | Rezepte gehen in Notizen/Chats verloren; keine zentrale, persoenliche Verwaltung; hoher Suchaufwand |
+
+- **Wesentliche Erkenntnisse:**
+  - **Informationsarchitektur ist zentral:** Eine kontinentbasierte Navigation senkt die Einstiegshuerde und macht Discovery greifbarer als eine rein lineare Gesamtliste.
+  - **Persoenlicher Mehrwert entscheidet ueber Wiederkehr:** Favoritenfunktion und persoenliche Rezeptverwaltung (Create/Edit/Delete) sind fuer langfristige Nutzung wichtiger als reine Lesefunktion.
+  - **Effizienz im Browse-Prozess:** Suchfunktion sowie facettierte Filter (Kontinent, Difficulty, Kochzeitbereich) reduzieren Reibung und beschleunigen die Rezeptauswahl deutlich.
+  - **Klare Berechtigungslogik schafft Vertrauen:** Owner-basierte Aktionen bei Bearbeiten/Loeschen verhindern ungewollte Eingriffe in fremde Inhalte.
+  - **Mobile-First Relevanz:** Zielgruppen nutzen die App oft auf kleineren Screens; deshalb waren responsive Navigation, klickbare Listenzeilen und kompakte Interaktionen entscheidend.
+  - **Fruehe Hypothesen fuer Validate-Phase:** Getroffene Annahmen betreffen vor allem die Nuetzlichkeit der Kontinentstruktur, die Akzeptanz von Favoriten und den Nutzen von Such-/Filterlogik; diese sind in der Validate-Phase gezielt testbar.
 
 ### 3.2 Sketch
-- **Variantenüberblick:** _[kurz]_
+- **VariantenÃ¼berblick:** _[kurz]_
 - **Skizzen:** _[Mehrere Varianten; Unterschiede kurz dokumentieren.]_
 
 ### 3.3 Decide
-- **Gewählte Variante & Begründung:** _[Entscheidkriterien nennen]_  
+- **GewÃ¤hlte Variante & BegrÃ¼ndung:** _[Entscheidkriterien nennen]_  
 - **End-to-End-Ablauf:** _[Beschreibung inkl. User Journey Map]_  
 - **Mockup:** _[URL, z. B. Figma; Screenshots mit kurzen Beschreibungen]_  
 
@@ -159,8 +204,8 @@ Die Durchführung erfolgt phasenbasiert; dokumentieren Sie die wichtigsten Ergeb
 Beschreibt die Gestaltung und Interaktion.
 > **Hinweis:** Hier wird der **Prototyp** beschrieben, nicht das **Mockup**.
 - **Informationsarchitektur:** _[z. B. Seiten/Navigation: Konzept, nicht die technische Umsetzung]_
-- **User Interface Design:** _[wichtige Screens: Screenshots mit kurzen Erläuterungen]_  
-- **Designentscheidungen:** _[zentrale Entscheidungen und Begründungen]_
+- **User Interface Design:** _[wichtige Screens: Screenshots mit kurzen ErlÃ¤uterungen]_  
+- **Designentscheidungen:** _[zentrale Entscheidungen und BegrÃ¼ndungen]_
 
 #### 3.4.2. Umsetzung (Technik)
 Fasst die technische Realisierung zusammen.
@@ -173,16 +218,16 @@ Fasst die technische Realisierung zusammen.
 
 ### 3.5 Validate
 - **URL der getesteten Version** (separat deployt)
-- **Ziele der Prüfung:** _[welche Fragen sollen beantwortet werden?]_  
+- **Ziele der PrÃ¼fung:** _[welche Fragen sollen beantwortet werden?]_  
 - **Vorgehen:** _[moderiert/unmoderiert; remote/on-site]_  
 - **Stichprobe:** _[Mit wem wurde getestet? Profil; Anzahl]_  
 - **Aufgaben/Szenarien:** _[Ausformulierte Testaufgaben]_  
 - **Kennzahlen & Beobachtungen:** _[z. B. Erfolgsquote, Zeitbedarf, qualitative Findings]_  
-- **Zusammenfassung der Resultate:** _[Wichtigste Erkenntnisse; 2-4 Sätze]_  
-- **Abgeleitete Verbesserungen:** _[Anforderungen, die als nächstes umgesetzt werden sollten, priorisiert, kurz begründet; falls Verbesserungen im Prototyp konkret umgesetzt wurden: In Kap. 4 dokumentieren]_  
+- **Zusammenfassung der Resultate:** _[Wichtigste Erkenntnisse; 2-4 SÃ¤tze]_  
+- **Abgeleitete Verbesserungen:** _[Anforderungen, die als nÃ¤chstes umgesetzt werden sollten, priorisiert, kurz begrÃ¼ndet; falls Verbesserungen im Prototyp konkret umgesetzt wurden: In Kap. 4 dokumentieren]_  
 
 ## 4. Erweiterungen [Optional]
-Dokumentiert Erweiterungen über den Mindestumfang hinaus.
+Dokumentiert Erweiterungen Ã¼ber den Mindestumfang hinaus.
 > **Hinweis:** Jede Erweiterung ist separat nach dem folgenden Schema zu beschreiben.
 
 ### _[4.x Kurzbeschreibung / Titel]_  
@@ -191,7 +236,7 @@ Dokumentiert Erweiterungen über den Mindestumfang hinaus.
 - **Referenz:** _[Wo wird die Erweiterung auch noch beschrieben, z.B. Screenshot oder Beschreibung in einem anderen Kapitel]_  
 - **Aus Evaluation abgeleitet?:** _[Wurde diese Erweiterung als Folge eines in der Evaluation identifizierten Issues implementiert?]_  
 
-> Das folgende **Beispiel** wurde bewusst kurz gehalten. Erweiterungen dürfen auch ausführlicher beschrieben werden.
+> Das folgende **Beispiel** wurde bewusst kurz gehalten. Erweiterungen dÃ¼rfen auch ausfÃ¼hrlicher beschrieben werden.
 
 ### 4.1 Tabelle nach Kategorien filtern
 - **Beschreibung & Nutzen:** Tabelle X kann nach Kategorie gefiltert werden, weil User typischerweise nur an einer bestimmten Kategorie interessiert sind.  
@@ -204,7 +249,7 @@ Dokumentiert Erweiterungen über den Mindestumfang hinaus.
 
 ## 5. Projektorganisation [Optional]
 Beispiele:
-- **Repository & Struktur:** _[Link; kurze Strukturübersicht]_  
+- **Repository & Struktur:** _[Link; kurze StrukturÃ¼bersicht]_  
 - **Issue-Management:** _[Vorgehen kurz beschreiben]_  
 - **Commit-Praxis:** _[z. B. sprechende Commits]_
 
@@ -213,14 +258,14 @@ Die folgende Deklaration ist verpflichtend und beschreibt den Einsatz von KI im 
 
 ### 6.1 KI-Tools
 - **Eingesetzte Tools**: _[z. B. Copilot, ChatGPT, Claude, lokale Modelle; Version/Variante wenn bekannt]_
-- **Zweck & Umfang**: _[wie, wofür und in welchem Ausmass wurde KI eingesetzt (z. B. Textentwürfe, Codevorschläge, Tests, Refactoring); welche Teile stammen (ganz/teilweise) aus KI-Unterstützung?]_
-- **Eigene Leistung (Abgrenzung):** _[was ist eigenständig erarbeitet/überarbeitet worden?]_
+- **Zweck & Umfang**: _[wie, wofÃ¼r und in welchem Ausmass wurde KI eingesetzt (z. B. TextentwÃ¼rfe, CodevorschlÃ¤ge, Tests, Refactoring); welche Teile stammen (ganz/teilweise) aus KI-UnterstÃ¼tzung?]_
+- **Eigene Leistung (Abgrenzung):** _[was ist eigenstÃ¤ndig erarbeitet/Ã¼berarbeitet worden?]_
 
 ### 6.2 Prompt-Vorgehen
-_[Überlegungen zu Prompt-Vorgehen, Qualität und Urheberrecht/Quellen. Wie wurde beim Prompting vorgegangen? Zu beschreiben ist die grundlegende Vorgehensweise. Einzelne, konkrete Prompts sollten höchstens als Beispiele aufgeführt werden. ]_
+_[Ãœberlegungen zu Prompt-Vorgehen, QualitÃ¤t und Urheberrecht/Quellen. Wie wurde beim Prompting vorgegangen? Zu beschreiben ist die grundlegende Vorgehensweise. Einzelne, konkrete Prompts sollten hÃ¶chstens als Beispiele aufgefÃ¼hrt werden. ]_
 
 ### 6.3 Reflexion
-_[Nutzen, Grenzen, Risiken/Qualitätssicherung, ...]_
+_[Nutzen, Grenzen, Risiken/QualitÃ¤tssicherung, ...]_
 
 ## 7. Anhang [Optional]
 Beispiele:

@@ -6,6 +6,7 @@
 
 	let { children, data } = $props();
 	let isDarkMode = $state(false);
+	const THEME_STORAGE_KEY = 'globe_recipes_theme';
 	const navLinks = [
 		{ label: 'Home', href: '/' },
 		{ label: 'Continents', href: '/continents' },
@@ -22,9 +23,14 @@
 	function toggleTheme() {
 		isDarkMode = !isDarkMode;
 		applyTheme();
+		localStorage.setItem(THEME_STORAGE_KEY, isDarkMode ? 'dark' : 'light');
 	}
 
 	onMount(() => {
+		const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+		if (savedTheme === 'dark' || savedTheme === 'light') {
+			isDarkMode = savedTheme === 'dark';
+		}
 		applyTheme();
 	});
 </script>

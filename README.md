@@ -45,9 +45,11 @@ Beschreibt die Lösungsidee.
     5. **Kontobezogene Nutzung (Sign-up/Login):** Nutzer:innen koennen ein Konto erstellen und sich einloggen. Die Sitzung wird serverseitig ueber Sessions verwaltet, damit geschuetzte Funktionen nur authentifizierten Nutzer:innen zur Verfuegung stehen.
     6. **Eigene Rezepte erstellen:** Auf der Create-Seite koennen eingeloggte Nutzer:innen Rezepte mit validierten Eingaben erstellen (u. a. Titel, Kontinent, Land, Beschreibung, Zutaten, Anweisungen, Difficulty, Zeit, Portionen). Ingredients und Instructions werden strukturiert als Liste erfasst.
     7. **Eigene Inhalte verwalten:** User-created Rezepte erscheinen in der Gesamtliste und in der Unteransicht User Created. Eigene Rezepte koennen geloescht werden; das Loeschen ist auf den/die jeweilige:n Owner:in beschraenkt.
-    8. **Favoriten verwalten:** Rezepte koennen ueber das Sternsymbol als Favorit markiert bzw. entmarkiert werden (Liste und Detailseite). Favoriten werden persistent in MongoDB gespeichert und in der Unteransicht Favorites gefiltert dargestellt.
-    9. **Mehrere Rezeptansichten als Workflow:** In All Recipes koennen Nutzer:innen zwischen drei Ansichten wechseln: All Recipes, User Created und Favorites. So wird zwischen Entdecken, eigenen Inhalten und persoenlicher Kuratierung sauber getrennt.
-    10. **Deploybare Webanwendung:** Das Projekt ist fuer Netlify-Deployment vorbereitet, sodass die Workflows nicht nur lokal, sondern als veroeffentlichter Web-Prototyp genutzt und validiert werden koennen.
+    8. **Eigene Rezepte bearbeiten (Edit):** Fuer eigene (user-created) Rezepte steht eine Bearbeitungsansicht zur Verfuegung. Eingeloggte Owner koennen bestehende Inhalte aktualisieren, ohne ein Rezept neu anlegen zu muessen.
+    9. **Suchen und filtern in All Recipes:** Die Rezeptliste bietet eine Suchfunktion sowie facettierte Filter (z. B. Kontinent, Schwierigkeitsgrad und Kochzeitbereich). Ergebnisse werden nach dem Anwenden der Filter gezielt eingegrenzt.
+    10. **Favoriten verwalten:** Rezepte koennen ueber das Sternsymbol als Favorit markiert bzw. entmarkiert werden (Liste und Detailseite). Favoriten werden persistent in MongoDB gespeichert und in der Unteransicht Favorites gefiltert dargestellt.
+    11. **Mehrere Rezeptansichten als Workflow:** In All Recipes koennen Nutzer:innen zwischen drei Ansichten wechseln: All Recipes, User Created und Favorites. So wird zwischen Entdecken, eigenen Inhalten und persoenlicher Kuratierung sauber getrennt.
+    12. **Deploybare Webanwendung:** Das Projekt ist fuer Netlify-Deployment vorbereitet, sodass die Workflows nicht nur lokal, sondern als veroeffentlichter Web-Prototyp genutzt und validiert werden koennen.
 
   - **Version 2 (kurz genannt):**
     - Kontinente entdecken (Home-Kacheln + Kontinentseiten mit Carousel).
@@ -56,9 +58,70 @@ Beschreibt die Lösungsidee.
     - In Rezept-Detailseiten wechseln und Inhalte lesen.
     - Konto erstellen, einloggen, Session nutzen.
     - Eigene Rezepte erstellen (validierte Formulareingaben).
-    - Eigene Rezepte in separater Ansicht sehen und loeschen (owner-basiert).
+    - Eigene Rezepte in separater Ansicht sehen, bearbeiten und loeschen (owner-basiert).
+    - Rezepte ueber Suche und facettierte Filter eingrenzen (Kontinent, Difficulty, Kochzeitbereich).
     - Favoriten per Stern setzen/entfernen (persistent in MongoDB).
     - Zwischen All Recipes, User Created und Favorites wechseln.
+
+  - **Workflow-Illustration (Mermaid):**
+
+```mermaid
+flowchart TD
+  A[Start: Home] --> B{Navigation}
+  B --> C[Kontinente entdecken]
+  B --> D[All Recipes]
+  B --> E[About]
+  B --> F[Create]
+
+  C --> C1[Kontinentseite mit Text + Carousel]
+  C1 --> D
+
+  D --> D1[Liste anzeigen]
+  D1 --> D2[Suchen + Filter anwenden]
+  D1 --> D3[Sortieren]
+  D1 --> D4[Ansicht wechseln: All / User Created / Favorites]
+  D1 --> G[Rezept-Detailseite]
+
+  G --> G1[Favorite setzen/entfernen]
+  G --> G2[Created by anzeigen]
+  G --> G3[Zurueck zur Liste]
+```
+
+```mermaid
+flowchart TD
+  A[Unauthenticated User] --> B{Create / Edit / Delete?}
+  B -->|Ja| C[Weiterleitung zu Login]
+  C --> D[Login oder Sign-up]
+  D --> E{Erfolgreich authentifiziert?}
+  E -->|Nein| D
+  E -->|Ja| F[Session aktiv]
+  F --> G[Create-Rezeptformular]
+  G --> H[Rezept in MongoDB speichern]
+  H --> I[Rezept erscheint in All Recipes + User Created]
+
+  F --> J[Edit eigenes Rezept]
+  J --> K[Owner-Check]
+  K -->|Owner| L[Update speichern]
+  K -->|Nicht Owner| M[Aktion verweigert]
+
+  F --> N[Delete eigenes Rezept]
+  N --> O[Bestaetigungsdialog]
+  O -->|Confirm| P[Rezept loeschen + Favoriten-Referenzen bereinigen]
+  O -->|Cancel| Q[Keine Aenderung]
+```
+
+```mermaid
+flowchart TD
+  A[All Recipes Tabelle] --> B[Star-Icon in Liste]
+  A --> C[Star-Button in Detailseite]
+  B --> D[Action: toggleFavorite]
+  C --> D
+  D --> E{Eingeloggt?}
+  E -->|Nein| F[Weiterleitung zu Login]
+  E -->|Ja| G[Favorite in MongoDB anlegen/entfernen]
+  G --> H[UI-Status aktualisiert]
+  H --> I[Favorites-Ansicht zeigt gefilterte Favoriten]
+```
 
 - **Annahmen [Optional]:**
   - Nutzer:innen moechten internationale Rezepte nicht nur lesen, sondern auch persoenlich sammeln (Favoriten) und eigene Inhalte beisteuern.
@@ -69,8 +132,6 @@ Beschreibt die Lösungsidee.
 
 - **Abgrenzung [Optional]:**
   - Kein Image-Upload fuer eigene Rezepte (weder im Create-Formular noch in der Detailansicht).
-  - Keine Bearbeiten-Funktion (Edit) fuer bestehende Rezepte im aktuellen Stand.
-  - Keine Volltextsuche oder facettierte Mehrfachfilter (z. B. nach Zutaten, Kochzeitbereich, Allergenen).
   - Keine erweiterten Rollen/Rechte (z. B. Admin-Backoffice, Moderation, Freigabeworkflow).
   - Kein Passwort-Reset, keine E-Mail-Verifikation und kein Social Login.
   - Keine Mengenumrechnung, kein Einkaufslisten-Export, keine Naehrwertberechnung.

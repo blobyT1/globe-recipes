@@ -34,7 +34,7 @@
 <!-- - **Weitere Stakeholder [Optional]:** Dozierende und Mitstudierende im Modul Prototyping (Feedback, Evaluation, Bewertung) sowie Testnutzer:innen, die Usability-Rueckmeldungen liefern. -->  
 
 
-## 2. LÃ¶sungsidee
+## 2. Loesungsidee
 <!-- Beschreibt die LÃ¶sungsidee. -->
 - **Kernfunktionalitaet:**
   - **Version 1 (ausformuliert):**
@@ -149,34 +149,30 @@ Die DurchfÃ¼hrung erfolgt phasenbasiert; dokumentieren Sie die wichtigsten Erg
 - **Zielgruppenverständnis:**
   - **Problemraumanalyse (kurz):** In der Analysephase wurde deutlich, dass viele Rezeptplattformen entweder sehr viele Inhalte ohne klare Struktur bieten oder kaum Moeglichkeit zur persoenlichen Organisation geben. Fuer Globe Recipes wurde deshalb ein nutzerzentrierter Fokus auf Orientierung (Kontinente), persoenliche Kuratierung (Favoriten) und aktive Mitgestaltung (eigene Rezepte) gesetzt.
   - **Methodischer Ansatz (Understand/Define):** Angelehnt an Human-Centered Design wurden Zielgruppe, Nutzungskontext, Aufgaben und Frustpunkte zuerst hypothetisch ueber Proto-Personas beschrieben und danach in konkrete Produktanforderungen uebersetzt (Navigation, Listenansichten, Authentifizierung, Create/Edit/Delete, Such- und Filterlogik).
-  - **Proto-Personas (Template-basiert):**
+  - **Proto-Personas:**
 
-    - **Proto-Persona 1: Lena Hobbykoechin**
-
-      | Feld | Inhalt |
+      | Proto-Persona 1: | Lena, Hobbykoechin |
       |---|---|
-      | **Name und persoenliche Attribute** | Lena, 25 Jahre, Studentin, digital affin, kocht 3-4x pro Woche |
-      | **Umfeld ("Kontext")** | Kocht zuhause mit Smartphone/Laptop, meist abends, begrenztes Budget |
+      | **Persoenliche Attribute** | 25 Jahre, Studentin, digital affin, kocht 3-4x pro Woche |
+      | **Umfeld** | Kocht zuhause mit Smartphone/Laptop, meist abends, begrenztes Budget |
       | **Ziele** | Neue internationale Rezepte entdecken; abwechslungsreich kochen; Rezepte schnell vergleichen |
       | **Aufgaben** | Nach Kontinent/Thema browsen; Rezeptdetails lesen; Favoriten speichern fuer spaeter |
       | **Frustpunkte** | Immer gleiche Vorschlaege auf grossen Plattformen; unuebersichtliche Trefferlisten; zu viel Werbung/Noise |
 
-    - **Proto-Persona 2: Marco Food Explorer**
 
-      | Feld | Inhalt |
+      | Proto-Persona 2: | Marco, Food Explorer |
       |---|---|
-      | **Name und persoenliche Attribute** | Marco, 32 Jahre, berufstaetig, wenig Zeit unter der Woche, neugierig auf neue Kuechen |
-      | **Umfeld ("Kontext")** | Kocht hauptsaechlich am Wochenende, nutzt vor allem Mobile, sucht schnell Inspiration |
+      | **Persoenliche Attribute** | 32 Jahre, berufstaetig, wenig Zeit unter der Woche, neugierig auf neue Kuechen |
+      | **Umfeld** | Kocht hauptsaechlich am Wochenende, nutzt vor allem Mobile, sucht schnell Inspiration |
       | **Ziele** | In kurzer Zeit passende Rezepte finden; nach Schwierigkeitsgrad/Kochzeit filtern; Favoritenliste aufbauen |
       | **Aufgaben** | All-Recipes-Liste nutzen; sortieren/filtern; in Detailseiten wechseln und Rezepte speichern |
       | **Frustpunkte** | Zu viele Optionen ohne Fokus; fehlende Filterbarkeit; schwer nachvollziehbare Rezeptqualitaet |
 
-    - **Proto-Persona 3: Sara Familienmanagerin**
 
-      | Feld | Inhalt |
+      | Proto-Persona 3: | Sara, Familienmanagerin |
       |---|---|
-      | **Name und persoenliche Attribute** | Sara, 40 Jahre, Mutter, organisiert Mahlzeiten fuer Familie, praxisorientiert |
-      | **Umfeld ("Kontext")** | Plant mehrere Gerichte pro Woche, nutzt Tablet/Notebook zuhause |
+      | **Persoenliche Attribute** | 40 Jahre, Mutter, organisiert Mahlzeiten fuer Familie, praxisorientiert |
+      | **Umfeld** | Plant mehrere Gerichte pro Woche, nutzt Tablet/Notebook zuhause |
       | **Ziele** | Strukturierte Sammlung verlaesslicher Rezepte; einfache Wiederauffindbarkeit; eigene Rezepte dokumentieren |
       | **Aufgaben** | Eigene Rezepte erstellen/bearbeiten; in User-Created verwalten; nicht mehr benoetigte Rezepte loeschen |
       | **Frustpunkte** | Rezepte gehen in Notizen/Chats verloren; keine zentrale, persoenliche Verwaltung; hoher Suchaufwand |
@@ -190,13 +186,116 @@ Die DurchfÃ¼hrung erfolgt phasenbasiert; dokumentieren Sie die wichtigsten Erg
   - **Fruehe Hypothesen fuer Validate-Phase:** Getroffene Annahmen betreffen vor allem die Nuetzlichkeit der Kontinentstruktur, die Akzeptanz von Favoriten und den Nutzen von Such-/Filterlogik; diese sind in der Validate-Phase gezielt testbar.
 
 ### 3.2 Sketch
-- **VariantenÃ¼berblick:** _[kurz]_
-- **Skizzen:** _[Mehrere Varianten; Unterschiede kurz dokumentieren.]_
+- **Variantenueberblick:**
+  <br>
+  Ein erster, schneller Papier-Sketch wurde im Rahmen von Crazy 8 erstellt, um mehrere Loesungsansaetze in kurzer Zeit zu visualisieren; anschliessend wurden die vielversprechendsten Varianten in Figma als digitale Skizzen ausgearbeitet.
+
+<br>
+
+- **Skizzen: Crazy Eight (Papier-Sketch)**
+
+  <img src="static/documentation_images/crazyEight.png" alt="Crazy Eight" width="420">
+
+  Der erste Entwurf wurde als schneller Papier-Sketch im Crazy-8-Stil erstellt. Ziel war es, in kurzer Zeit mehrere Layout- und Navigationsideen sichtbar zu machen (Home, Kontinentansicht, Rezeptdetail und Create-Flow), ohne frueh in visuelle Details zu investieren.
+
+<br>
+
+- **Skizzen in Figma**
+
+  <img src="static/documentation_images/figmaOne.png" alt="Figma Screen 1" width="700">
+
+  **Erstes Bild:** Fokus auf der Home-Page mit klarer Navigation und Kontinent-Kacheln. Diese Richtung liegt nahe an der aktuell umgesetzten Startseite und wurde deshalb als solide Basis fuer die weitere Ausarbeitung genutzt.
+
+  <br>
+
+  <img src="static/documentation_images/figmaTwo.png" alt="Figma Screen 2" width="700">
+
+  **Zweites Bild:** Rezept-Uebersicht als Kachelgrid mit grossen Bildern. Der Ansatz war visuell attraktiv, wurde aber als relativ aufwaendig beurteilt (Bildpflege, Konsistenz und Content-Aufbereitung) und daher nicht als primaere Listenlogik weiterverfolgt.
+
+  <br>
+
+  <img src="static/documentation_images/figmaThree.png" alt="Figma Screen 3" width="700">
+
+  **Drittes Bild:** "Bare-bones"-Variante der Create-Page mit Fokus auf Eingabefluss und Formularlogik. Diese Skizze half, die benoetigten Felder frueh zu strukturieren und die spaetere Umsetzungsprioritaet auf funktionale Klarheit statt reine Optik zu legen.
+
+  <br>
 
 ### 3.3 Decide
-- **GewÃ¤hlte Variante & BegrÃ¼ndung:** _[Entscheidkriterien nennen]_  
-- **End-to-End-Ablauf:** _[Beschreibung inkl. User Journey Map]_  
-- **Mockup:** _[URL, z. B. Figma; Screenshots mit kurzen Beschreibungen]_  
+- **Gewaehlte Variante & Begruendung:**  
+  - Es wurde bewusst ein **Mischansatz** aus den erarbeiteten Varianten verwendet: Teile aus den Papier-/Figma-Skizzen wurden uebernommen, andere Teile waehrend der Umsetzung direkt im Projekt durch iteratives Ausprobieren und Prompting weiterentwickelt.
+  - Die finale Richtung kombiniert daher fruehe Entwurfsideen (z. B. kontinentbasierte Orientierung und klare Hauptnavigation) mit pragmatischen Entscheidungen aus der Implementierungsphase.
+  - Die Variante "Rezeptliste als Kacheln mit grossen Bildern" wurde nicht als Hauptdarstellung umgesetzt, da Erstellung/Pflege geeigneter Bilder sowie konsistente Bildqualitaet einen deutlich hoeheren Aufwand verursacht haetten.
+  - **Entscheidungskriterien im Projekt:**
+    - **Nutzbarkeit zuerst:** schnelle Orientierung, klarer Ablauf, wenige Klicks bis zur Rezeptdetailseite.
+    - **Umsetzbarkeit im Modulrahmen:** Fokus auf stabile Kernfunktionen statt aufwendige Medienproduktion.
+    - **Wartbarkeit:** strukturierte Listen-, Filter- und CRUD-Logik sind leichter erweiterbar als bildlastige Sonderlayouts.
+    - **Technische Konsistenz:** gleiche Interaktionsmuster in Navigation, Listenansichten und Detailseiten.
+
+- **End-to-End-Ablauf:**  
+  - Der Ablauf wurde als task-orientierte User Journey (Happy Flow) definiert, im Sinn von "konkrete Aufgabenerledigung mit dem Produkt":
+    1. **Einstieg & Orientierung:** Home-Page oeffnen und ueber Navbar/Kontinent-Kacheln in die gewuenschte Richtung navigieren.
+    2. **Entdecken & Eingrenzen:** In All Recipes Rezepte durchsuchen, filtern und sortieren.
+    3. **Bewerten & Entscheiden:** Rezeptdetailseite aufrufen, Zutaten/Anleitung/Metadaten pruefen, ggf. Favorit setzen.
+    4. **Eigene Inhalte verwalten:** (eingeloggt) Rezept erstellen, in User Created wiederfinden, bearbeiten oder loeschen.
+    5. **Persoenliche Kuratierung:** Favoriten in der Favorites-Ansicht gebuendelt nutzen.
+  - **User Journey (Happy Flow als Ablaufgrafik):**
+
+```mermaid
+flowchart LR
+  A[Home aufrufen] --> B{Navigationspfad waehlen}
+  B --> C[Kontinentseite oeffnen]
+  B --> D[All Recipes oeffnen]
+  C --> D
+  D --> E[Suche / Filter / Sortierung anwenden]
+  E --> F[Rezeptdetail oeffnen]
+  F --> G{Eingeloggt?}
+  G -->|Nein| H[Rezepte lesen und Orientierung behalten]
+  G -->|Ja| I[Favorit setzen]
+  I --> J[Create oder Edit/Loeschen nutzen]
+  H --> K[Favorites / User Created spaeter nutzen]
+  J --> K[Favorites / User Created aktualisiert sehen]
+```
+
+  _Diese User Journey zeigt den zentralen Happy Flow vom Einstieg ueber Auswahl und Bewertung bis zur persoenlichen Kuratierung._
+
+  - **Informationsarchitektur (Hierarchie + Navigation):**
+
+```mermaid
+flowchart TD
+  R[Globe Recipes]
+  R --> H[Home]
+  R --> CO[Continents]
+  R --> AR[All Recipes]
+  R --> CR[Create]
+  R --> AB[About]
+
+  CO --> NA[North America]
+  CO --> SA[South America]
+  CO --> EU[Europe]
+  CO --> AF[Africa]
+  CO --> AS[Asia]
+  CO --> OC[Oceania]
+
+  AR --> A1[All Recipes Ansicht]
+  AR --> A2[User Created Ansicht]
+  AR --> A3[Favorites Ansicht]
+  A1 --> RD[Rezeptdetail]
+  A2 --> RD
+  A3 --> RD
+  RD --> ED[Edit]
+  RD --> FV[Favorit]
+  RD --> DL[Delete]
+```
+
+  _Die Hierarchie zeigt die Seitenstruktur (oben) und die wichtigsten Navigationswege in die Rezeptdetail- und Verwaltungsfunktionen (unten)._
+
+- **Mockup:**  
+  - Referenz auf die bereits dokumentierten Entwurfsstaende in **Kapitel 3.2 Sketch** (Crazy Eight + Figma-Screens 1-3).
+  - **Figma-Link (Platzhalter):** `[Figma-Referenz-Mockup hier einfuegen](PASTE_FIGMA_LINK_HERE)`
+  - **Einordnung der Figma-Screens im Vergleich zum aktuellen Projektstand:**
+    - **Figma Screen 1 (Home):** Grundidee (Navigation + Kontinentfokus) wurde weitgehend uebernommen und entspricht der aktuellen Startlogik.
+    - **Figma Screen 2 (MyRecipes als Kachelansicht):** visuelle Richtung wurde nur teilweise uebernommen; aktuell liegt der Fokus auf einer funktionalen Tabellen-/Listenlogik in All Recipes mit Sortierung, Filtern und Aktionen.
+    - **Figma Screen 3 (Create):** die "bare-bones"-Formularidee wurde inhaltlich uebernommen; im aktuellen Stand ist die Create-Seite technisch erweitert (Validierung, strukturierte Eingaben, Login-Schutz).
 
 ### 3.4 Prototype
 
@@ -272,4 +371,5 @@ Beispiele:
 - **Quellen:** _[verwendete Vorlagen/Assets/Modelle; Lizenz/Urheberrecht; ...]_
 - **Testskript & Materialien:** _[Link/Datei]_  
 - **Rohdaten/Auswertung:** _[Link/Datei]_  
+
 

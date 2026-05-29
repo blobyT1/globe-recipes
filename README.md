@@ -1,28 +1,21 @@
-﻿# Projektdokumentation - [Projekttitel]
+﻿# Projektdokumentation - [Globe Recipes]
 
 ## Inhaltsverzeichnis
 
 1. [Ausgangslage](#1-ausgangslage)
-2. [LÃ¶sungsidee](#2-lÃ¶sungsidee)
+2. [Lösungsidee](#2-lösungsidee)
 3. [Vorgehen & Artefakte](#3-vorgehen--artefakte)
     1. [Understand & Define](#31-understand--define)
     2. [Sketch](#32-sketch)
     3. [Decide](#33-decide)
     4. [Prototype](#34-prototype)
     5. [Validate](#35-validate)
-4. [Erweiterungen [Optional]](#4-erweiterungen-optional)
-5. [Projektorganisation [Optional]](#5-projektorganisation-optional)
+4. [Erweiterungen](#4-erweiterungen)
+5. [Projektorganisation](#5-projektorganisation)
 6. [KI-Deklaration](#6-ki-deklaration)
-7. [Anhang [Optional]](#7-anhang-optional)
+7. [Anhang](#7-anhang)
 
-> **Hinweis:** Massgeblich sind die im **Unterricht** und auf **Moodle** kommunizierten Anforderungen.
-
-<!-- WICHTIG: DIE KAPITELSTRUKTUR DARF NICHT VERÃ„NDERT WERDEN! -->
-
-<!-- Diese Vorlage ist fÃ¼r eine README.md im Repository gedacht. Abschnitte mit [Optional] kÃ¶nnen weggelassen werden, wenn in den Ãœbungen nichts anderes verlangt wird. -->
-
-## 1. Ausgangslage <!--DONE-->
-<!-- Kurz beschreiben, welches Problem adressiert wird und welches Ergebnis angestrebt ist. Wem nÃ¼tzt die LÃ¶sung, wer ist beteiligt oder betroffen? -->
+## 1. Ausgangslage 
 - **Problem:** Viele Menschen interessieren sich für internationale Küchen, finden aber alltagsnah oft nur verstreute, uneinheitliche oder schwer vergleichbare Rezeptinformationen. Gleichzeitig fehlen in bestehenden Sammlungen häufig eine klare thematische Navigation (z. B. nach Kontinenten), ein einfacher Zugang zu Rezeptdetails und die Möglichkeit, eigene Rezepte strukturiert zu erfassen und wiederzufinden. Dadurch entsteht ein Bruch zwischen Inspiration und praktischer Umsetzung beim Kochen.  
 - **Ziele:**  
   - Eine übersichtliche, responsive Webanwendung bereitstellen, die Rezepte über Kontinente hinweg strukturiert zugänglich macht.  
@@ -31,17 +24,15 @@
   - Mit Login- und Favoritenfunktion einen persönlichen Nutzen und wiederkehrende Nutzung unterstützen.  
   - Eine solide technische Basis mit SvelteKit, Bootstrap und MongoDB für weitere Erweiterungen schaffen.  
 - **Primäre Zielgruppe:** Kochinteressierte Nutzer:innen, insbesondere Studierende und junge Erwachsene, die schnell internationale Gerichte entdecken, vergleichen und teilweise selbst kuratieren wollen.  
-<!-- - **Weitere Stakeholder [Optional]:** Dozierende und Mitstudierende im Modul Prototyping (Feedback, Evaluation, Bewertung) sowie Testnutzer:innen, die Usability-Rückmeldungen liefern. -->  
 
 
 ## 2. Lösungsidee
-<!-- Beschreibt die LÃ¶sungsidee. -->
 - **Kernfunktionalität:**
-  - **Version 1 (ausformuliert):**
+  - **Ausformulierte Version:**
     1. **Entdecken über die Startseite und Kontinente:** Nutzer:innen starten auf der Home-Seite mit sechs Kontinent-Kacheln und gelangen von dort in kontinent-spezifische Seiten. Jede Kontinentseite bietet Einordnungstexte, Bilder und einen Carousel-Bereich, um kulinarische Kontexte schnell erfassbar zu machen.
     2. **Navigation zwischen Kontinenten und Hauptbereichen:** über die globale Navigation (inkl. Continents-Dropdown) kann zwischen Home, Kontinenten, Create, All Recipes und About gewechselt werden. Dadurch ist sowohl exploratives Browsing als auch zielgerichtete Suche möglich.
     3. **Rezepte als Gesamtliste nutzen:** In All Recipes werden alle vorhandenen Rezepte tabellarisch angezeigt. Die Spalten (z. B. Titel, Kontinent, Difficulty, Cooking Time) sind sortierbar, damit Nutzer:innen Rezepte schnell nach relevanten Kriterien ordnen können.
-    4. **Direkter Detailzugriff aus der Liste:** Die Rezeptzeilen sind weitgehend klickbar und führen in die jeweilige Detailansicht. Dort werden Beschreibung, Metadaten, Zutaten, Schritte, Qülle/Ersteller sowie Favoritenstatus angezeigt.
+    4. **Direkter Detailzugriff aus der Liste:** Die Rezeptzeilen sind weitgehend klickbar und führen in die jeweilige Detailansicht. Dort werden Beschreibung, Metadaten, Zutaten, Schritte, Ersteller sowie Favoritenstatus angezeigt.
     5. **Kontobezogene Nutzung (Sign-up/Login):** Nutzer:innen können ein Konto erstellen und sich einloggen. Die Sitzung wird serverseitig über Sessions verwaltet, damit geschützte Funktionen nur authentifizierten Nutzer:innen zur Verfügung stehen.
     6. **Eigene Rezepte erstellen:** Auf der Create-Seite können eingeloggte Nutzer:innen Rezepte mit validierten Eingaben erstellen (u. a. Titel, Kontinent, Land, Beschreibung, Zutaten, Anweisungen, Difficulty, Zeit, Portionen). Ingredients und Instructions werden strukturiert als Liste erfasst.
     7. **Eigene Inhalte verwalten:** User-created Rezepte erscheinen in der Gesamtliste und in der Unteransicht User Created. Eigene Rezepte können gelöscht werden; das Löschen ist auf den/die jeweilige:n Owner:in beschränkt.
@@ -51,7 +42,7 @@
     11. **Mehrere Rezeptansichten als Workflow:** In All Recipes können Nutzer:innen zwischen drei Ansichten wechseln: All Recipes, User Created und Favorites. So wird zwischen Entdecken, eigenen Inhalten und persönlicher Kuratierung sauber getrennt.
     12. **Deploybare Webanwendung:** Das Projekt ist für Netlify-Deployment vorbereitet, sodass die Workflows nicht nur lokal, sondern als veröffentlichter Web-Prototyp genutzt und validiert werden können.
 
-  - **Version 2 (kurz genannt):**
+  - **Zusammengefasste Version:**
     - Kontinente entdecken (Home-Kacheln + Kontinentseiten mit Carousel).
     - Global navigieren (Navbar + Continents-Dropdown).
     - Alle Rezepte tabellarisch anzeigen und sortieren.
@@ -128,14 +119,14 @@ flowchart TD
   H --> I[Favorites-Ansicht zeigt gefilterte Favoriten]
 ```
 
-- **Annahmen [Optional]:**
-  - Nutzer:innen möchten internationale Rezepte nicht nur lesen, sondern auch persönlich sammeln (Favoriten) und eigene Inhalte beisteürn.
+- **Annahmen:**
+  - Nutzer:innen möchten internationale Rezepte nicht nur lesen, sondern auch persönlich sammeln (Favoriten) und eigene Inhalte beisteuern.
   - Eine kontinent-basierte Struktur erleichtert den Einstieg besser als eine rein lange, ungefilterte Rezeptliste.
   - Sortierbarkeit in der Tabelle ist für den ersten Prototyp nutzbringender als komplexe Filter- oder Suchlogik.
   - Ein einfacher Account-Flow (Sign-up/Login) reicht für den Prototyp aus, um geschützte User-Flows realistisch zu testen.
   - Persistenz in MongoDB ist notwendig, damit Inhalte und Favoriten über Sessions und Deployments hinweg stabil verfügbar bleiben.
 
-- **Abgrenzung [Optional]:**
+- **Abgrenzung:**
   - Kein Image-Upload für eigene Rezepte (weder im Create-Formular noch in der Detailansicht).
   - Keine erweiterten Rollen/Rechte (z. B. Admin-Backoffice, Moderation, Freigabeworkflow).
   - Kein Passwort-Reset, keine E-Mail-Verifikation und kein Social Login.
@@ -143,28 +134,27 @@ flowchart TD
   - Kein Offline-Modus und keine native Mobile-App.
 
 ## 3. Vorgehen & Artefakte
-Die DurchfÃ¼hrung erfolgt phasenbasiert; dokumentieren Sie die wichtigsten Ergebnisse je Phase.
 
 ### 3.1 Understand & Define
 - **Zielgruppenverständnis:**
-  - **Problemraumanalyse (kurz):** In der Analysephase wurde deutlich, dass viele Rezeptplattformen entweder sehr viele Inhalte ohne klare Struktur bieten oder kaum Möglichkeit zur persönlichen Organisation geben. Für Globe Recipes wurde deshalb ein nutzerzentrierter Fokus auf Orientierung (Kontinente), persönliche Kuratierung (Favoriten) und aktive Mitgestaltung (eigene Rezepte) gesetzt.
-  - **Methodischer Ansatz (Understand/Define):** Angelehnt an Human-Centered Design wurden Zielgruppe, Nutzungskontext, Aufgaben und Frustpunkte zürst hypothetisch über Proto-Personas beschrieben und danach in konkrete Produktanforderungen übersetzt (Navigation, Listenansichten, Authentifizierung, Create/Edit/Delete, Such- und Filterlogik).
+  - **Problemraumanalyse:** In der Analysephase wurde deutlich, dass viele Rezeptplattformen entweder sehr viele Inhalte ohne klare Struktur bieten oder kaum Möglichkeit zur persönlichen Organisation geben. Für Globe Recipes wurde deshalb ein nutzerzentrierter Fokus auf Orientierung (Kontinente), persönliche Kuratierung (Favoriten) und aktive Mitgestaltung (eigene Rezepte) gesetzt.
+  - **Methodischer Ansatz (Understand/Define):** Angelehnt an Human-Centered Design wurden Zielgruppe, Nutzungskontext, Aufgaben und Frustpunkte zuerst hypothetisch über Proto-Personas beschrieben und danach in konkrete Produktanforderungen übersetzt (Navigation, Listenansichten, Authentifizierung, Create/Edit/Delete, Such- und Filterlogik).
   - **Proto-Personas:**
 
       | Proto-Persona 1: | Lena, Hobbyköchin |
       |---|---|
       | **Persönliche Attribute** | 25 Jahre, Studentin, digital affin, kocht 3-4x pro Woche |
       | **Umfeld** | Kocht zuhause mit Smartphone/Laptop, meist abends, begrenztes Budget |
-      | **Ziele** | Neü internationale Rezepte entdecken; abwechslungsreich kochen; Rezepte schnell vergleichen |
+      | **Ziele** | Neue internationale Rezepte entdecken; abwechslungsreich kochen; Rezepte schnell vergleichen |
       | **Aufgaben** | Nach Kontinent/Thema browsen; Rezeptdetails lesen; Favoriten speichern für später |
       | **Frustpunkte** | Immer gleiche Vorschläge auf grossen Plattformen; unübersichtliche Trefferlisten; zu viel Werbung/Noise |
 
 
       | Proto-Persona 2: | Marco, Food Explorer |
       |---|---|
-      | **Persönliche Attribute** | 32 Jahre, berufstätig, wenig Zeit unter der Woche, neugierig auf neü Küchen |
-      | **Umfeld** | Kocht hauptsächlich am Wochenende, nutzt vor allem Mobile, sucht schnell Inspiration |
-      | **Ziele** | In kurzer Zeit passende Rezepte finden; nach Schwierigkeitsgrad/Kochzeit filtern; Favoritenliste aufbaün |
+      | **Persönliche Attribute** | 32 Jahre, berufstätig, wenig Zeit unter der Woche, neugierig auf neue Küchen |
+      | **Umfeld** | Kocht hauptsächlich am Wochenende, nutzt vor allem Tablet, sucht schnell Inspiration |
+      | **Ziele** | In kurzer Zeit passende Rezepte finden; nach Schwierigkeitsgrad/Kochzeit filtern; Favoritenliste aufbauen |
       | **Aufgaben** | All-Recipes-Liste nutzen; sortieren/filtern; in Detailseiten wechseln und Rezepte speichern |
       | **Frustpunkte** | Zu viele Optionen ohne Fokus; fehlende Filterbarkeit; schwer nachvollziehbare Rezeptqualität |
 
@@ -207,7 +197,7 @@ Die DurchfÃ¼hrung erfolgt phasenbasiert; dokumentieren Sie die wichtigsten Erg
   - **Informationsarchitektur ist zentral:** Eine kontinentbasierte Navigation senkt die Einstiegshürde und macht Discovery greifbarer als eine rein lineare Gesamtliste.
   - **Persönlicher Mehrwert entscheidet über Wiederkehr:** Favoritenfunktion und persönliche Rezeptverwaltung (Create/Edit/Delete) sind für langfristige Nutzung wichtiger als reine Lesefunktion.
   - **Effizienz im Browse-Prozess:** Suchfunktion sowie facettierte Filter (Kontinent, Difficulty, Kochzeitbereich) reduzieren Reibung und beschleunigen die Rezeptauswahl deutlich.
-  - **Klare Berechtigungslogik schafft Vertraün:** Owner-basierte Aktionen bei Bearbeiten/Löschen verhindern ungewollte Eingriffe in fremde Inhalte.
+  - **Klare Berechtigungslogik schafft Vertrauen:** Owner-basierte Aktionen bei Bearbeiten/Löschen verhindern ungewollte Eingriffe in fremde Inhalte.
   - **Mobile-First Relevanz:** Zielgruppen nutzen die App oft auf kleineren Screens; deshalb waren responsive Navigation, klickbare Listenzeilen und kompakte Interaktionen entscheidend.
   - **Frühe Hypothesen für Validate-Phase:** Getroffene Annahmen betreffen vor allem die Nützlichkeit der Kontinentstruktur, die Akzeptanz von Favoriten und den Nutzen von Such-/Filterlogik; diese sind in der Validate-Phase gezielt testbar.
 
@@ -222,7 +212,7 @@ Die DurchfÃ¼hrung erfolgt phasenbasiert; dokumentieren Sie die wichtigsten Erg
 
   <img src="static/documentation_images/crazyEight.png" alt="Crazy Eight" width="420">
 
-  Der erste Entwurf wurde als schneller Papier-Sketch im Crazy-8-Stil erstellt. Ziel war es, in kurzer Zeit mehrere Layout- und Navigationsideen sichtbar zu machen (Home, Kontinentansicht, Rezeptdetail und Create-Flow), ohne früh in visülle Details zu investieren.
+  Der erste Entwurf wurde als schneller Papier-Sketch im Crazy-8-Stil erstellt. Ziel war es, in kurzer Zeit mehrere Layout- und Navigationsideen sichtbar zu machen (Home, Kontinentansicht, Rezeptdetail und Create-Flow), ohne früh in visuelle Details zu investieren.
 
 <br>
 
@@ -230,13 +220,13 @@ Die DurchfÃ¼hrung erfolgt phasenbasiert; dokumentieren Sie die wichtigsten Erg
 
   <img src="static/documentation_images/figmaOne.png" alt="Figma Screen 1" width="700">
 
-  **Erstes Bild:** Fokus auf der Home-Page mit klarer Navigation und Kontinent-Kacheln. Diese Richtung liegt nahe an der aktüll umgesetzten Startseite und wurde deshalb als solide Basis für die weitere Ausarbeitung genutzt.
+  **Erstes Bild:** Fokus auf der Home-Page mit klarer Navigation und Kontinent-Kacheln. Diese Richtung liegt nahe an der aktuell umgesetzten Startseite und wurde deshalb als solide Basis für die weitere Ausarbeitung genutzt.
 
   <br>
 
   <img src="static/documentation_images/figmaTwo.png" alt="Figma Screen 2" width="700">
 
-  **Zweites Bild:** Rezept-übersicht als Kachelgrid mit grossen Bildern. Der Ansatz war visüll attraktiv, wurde aber als relativ aufwändig beurteilt (Bildpflege, Konsistenz und Content-Aufbereitung) und daher nicht als primäre Listenlogik weiterverfolgt.
+  **Zweites Bild:** Rezept-übersicht als Kachelgrid mit grossen Bildern. Der Ansatz war visuell attraktiv, wurde aber als relativ aufwändig beurteilt (Bildpflege, Konsistenz und Content-Aufbereitung) und daher nicht als primäre Listenlogik weiterverfolgt.
 
   <br>
 
@@ -252,7 +242,7 @@ Die DurchfÃ¼hrung erfolgt phasenbasiert; dokumentieren Sie die wichtigsten Erg
   - Die finale Richtung kombiniert daher frühe Entwurfsideen (z. B. kontinentbasierte Orientierung und klare Hauptnavigation) mit pragmatischen Entscheidungen aus der Implementierungsphase.
   - Die Variante "Rezeptliste als Kacheln mit grossen Bildern" wurde nicht als Hauptdarstellung umgesetzt, da Erstellung/Pflege geeigneter Bilder sowie konsistente Bildqualität einen deutlich höheren Aufwand verursacht hätten.
   - **Entscheidungskriterien im Projekt:**
-    - **Nutzbarkeit zürst:** schnelle Orientierung, klarer Ablauf, wenige Klicks bis zur Rezeptdetailseite.
+    - **Nutzbarkeit zuerst:** schnelle Orientierung, klarer Ablauf, wenige Klicks bis zur Rezeptdetailseite.
     - **Umsetzbarkeit im Modulrahmen:** Fokus auf stabile Kernfunktionen statt aufwendige Medienproduktion.
     - **Wartbarkeit:** strukturierte Listen-, Filter- und CRUD-Logik sind leichter erweiterbar als bildlastige Sonderlayouts.
     - **Technische Konsistenz:** gleiche Interaktionsmuster in Navigation, Listenansichten und Detailseiten.
@@ -317,9 +307,9 @@ flowchart TD
 
 - **Mockup:**  
   - **Figma-Link:** `https://www.figma.com/design/tza1UKkScmChGGwkXil5RT/Globe-Recipes?node-id=0-1&t=i8ySRLhVczepAmBp-1`
-  - **Einordnung der Figma-Screens im Vergleich zum aktüllen Projektstand:**
+  - **Einordnung der Figma-Screens im Vergleich zum aktuellen Projektstand:**
     - **Figma Screen 1 (Home):** Grundidee (Navigation + Kontinentfokus) wurde weitgehend übernommen und entspricht der aktüllen Startlogik.
-    - **Figma Screen 2 (MyRecipes als Kachelansicht):** visülle Richtung wurde nur teilweise übernommen; aktuell liegt der Fokus auf einer funktionalen Tabellen-/Listenlogik in All Recipes mit Sortierung, Filtern und Aktionen.
+    - **Figma Screen 2 (MyRecipes als Kachelansicht):** visuelle Richtung wurde nur teilweise übernommen; aktuell liegt der Fokus auf einer funktionalen Tabellen-/Listenlogik in All Recipes mit Sortierung, Filtern und Aktionen.
     - **Figma Screen 3 (Create):** die "bare-bones"-Formularidee wurde inhaltlich übernommen; im aktuellen Stand ist die Create-Seite technisch erweitert (Validierung, strukturierte Eingaben, Login-Schutz).
 
 ### 3.4 Prototype
@@ -423,15 +413,17 @@ Fasst die technische Realisierung zusammen.
 - **Zusammenfassung der Resultate:** _[Wichtigste Erkenntnisse; 2-4 SÃ¤tze]_  
 - **Abgeleitete Verbesserungen:** _[Anforderungen, die als nÃ¤chstes umgesetzt werden sollten, priorisiert, kurz begrÃ¼ndet; falls Verbesserungen im Prototyp konkret umgesetzt wurden: In Kap. 4 dokumentieren]_  
 
-## 4. Erweiterungen [Optional] TODO. BEI PKT 1,3,5,6,7 SCREENSHOTS
+## 4. Erweiterungen 
 Dokumentiert Erweiterungen über den Mindestumfang hinaus.
-> **Hinweis:** Jede Erweiterung ist separat nach dem folgenden Schema zu beschreiben.
 
 ### 4.1 Dark Mode mit persistenter Theme-Auswahl
 - **Beschreibung & Nutzen:** Die Anwendung wurde um einen Light-/Dark-Mode erweitert, der direkt in der Navigation umschaltbar ist. Die Auswahl bleibt über Seitenwechsel und neue Sessions hinweg erhalten. Das verbessert die Nutzbarkeit bei unterschiedlichen Lichtverhältnissen und erhöht den Reifegrad der Oberfläche.
 - **Wo umgesetzt:** Frontend: Theme-Toggle und globale Theme-Variablen in `src/routes/+layout.svelte`, frühes Theme-Setzen zur Vermeidung von Flashing in `src/app.html`, Darstellungskompatibilität in Komponentenstilen (u. a. `ContentBox`, Tabellen, Modal). Backend/Datenbank: nicht erforderlich, da persistente Speicherung über `localStorage` erfolgt.
-- **Referenz:** Kap. 3.4.1 (Designentscheidungen) und sichtbare Umschaltung in den UI-Screens.
-- **Screenshot-Platzhalter:** _[Screenshot einfügen: gleiche Seite wie `ui3_recipelist.png` oder `ui1_home.png` im **Dark Mode**, mit sichtbarem Theme-Button in der Navbar als Beleg für die Umschaltung.]_
+- **Referenz:** Kap. 3.4.1 (Designentscheidungen) und sichtbare Umschaltung in den UI-Screens. <br>
+<br>
+  ![Dark Mode Home](./static/documentation_images/ui8_1_home_dark.png) <br> 
+  ![Dark Mode All Recipes](./static/documentation_images/ui8_2_recipelist_dark.png) <br>
+
 - **Aus Evaluation abgeleitet?:** Nein, initial als Qualitäts- und UX-Erweiterung umgesetzt.
 
 ### 4.2 Benutzerkonto mit Login-, Sign-up- und Session-Flow
@@ -444,7 +436,6 @@ Dokumentiert Erweiterungen über den Mindestumfang hinaus.
 - **Beschreibung & Nutzen:** Das Create-Formular wurde um systematische Feldgrenzen und Plausibilitätsprüfungen erweitert (z. B. Titel, Beschreibung, Zutaten, Schritte, Kochzeit, Portionen). Dadurch wird die Datenqualität erhöht, fehlerhafte Eingaben werden früh abgefangen und die Stabilität der nachgelagerten Listen-/Detailansichten verbessert.
 - **Wo umgesetzt:** Frontend: Eingabegrenzen über `maxlength`, `min`, `max` sowie strukturierte Erfassung von Zutaten/Schritten in `src/routes/create/+page.svelte`. Backend: zentrale Validierungslogik mit Grenzwerten (`LIMITS`) in `src/routes/create/+page.server.js` inklusive Fehlerbehandlung per `fail(...)`. Datenbank: indirekte Qualitätsverbesserung durch validierte Datensätze vor dem Speichern.
 - **Referenz:** Kap. 3.4.1 (Create-Screen) und Kap. 3.4.2 (Form-Validierung).
-- **Screenshot-Platzhalter:** _[Screenshot einfügen: Create-Formular mit sichtbaren Feldgrenzen/Validierung (z. B. Fehlermeldung oder deaktivierter "Save Recipe"-Button bei unvollständigen Zutaten/Schritten).]_
 - **Aus Evaluation abgeleitet?:** Nein, als robuste Basis für konsistente Eingaben umgesetzt.
 
 ### 4.4 Drei getrennte Ansichten in All Recipes (All, User Created, Favorites)
@@ -456,25 +447,34 @@ Dokumentiert Erweiterungen über den Mindestumfang hinaus.
 ### 4.5 Auf- und absteigende Sortierung in All Recipes
 - **Beschreibung & Nutzen:** Die Tabelle unterstützt interaktive Sortierung pro Spalte mit Richtungswechsel (aufsteigend/absteigend). Das beschleunigt Vergleiche und hilft, relevante Rezepte schneller zu finden.
 - **Wo umgesetzt:** Frontend: Sortierzustände und Sortierlogik in `src/lib/components/RecipesTable.svelte` (`sortColumn`, `sortDirection`, `toggleSort`, `sortedRecipes`). Backend/Datenbank: keine zusätzliche Logik, da Sortierung innerhalb der geladenen Ergebnisliste im Frontend erfolgt.
-- **Referenz:** Kap. 3.4.1 (All-Recipes-Screen).
-- **Screenshot-Platzhalter:** _[Screenshot einfügen: All-Recipes-Tabelle mit aktivierter Sortierung in einer Spalte (sichtbarer Pfeil/Indikator für auf- oder absteigend).]_
+- **Referenz:** Kap. 3.4.1 (All-Recipes-Screen).<br>
+  ![Sortierung aufsteigend](./static/documentation_images/ui9_1_list_sorting_asc.png) <br> 
+  ![Sortierung absteigend](./static/documentation_images/ui9_2_list_sorting_desc.png)
+  <br>
 - **Aus Evaluation abgeleitet?:** Nein, als Effizienz-Erweiterung implementiert.
 
 ### 4.6 Erweiterte Filterfunktion in All Recipes
 - **Beschreibung & Nutzen:** Zusätzlich zur Grundauflistung wurde eine kombinierbare Filter- und Suchfunktion umgesetzt: Volltextsuche, Kontinent-Filter, Difficulty-Filter sowie Kochzeit-Min/Max und Reset. Damit lassen sich große Rezeptmengen deutlich zielgerichteter eingrenzen.
 - **Wo umgesetzt:** Frontend: Filterformular, Anwendungslogik und Berechnung der Ergebnislisten in `src/lib/components/RecipesTable.svelte` (`applyFilters`, `resetFilters`, `filteredRecipes`). Backend/Datenbank: Bereitstellung der Rezeptdaten über bestehende Ladefunktionen; Filterung bewusst im Frontend für direkte Interaktionsrückmeldung im Prototyp.
 - **Referenz:** Kap. 3.4.1 (Screenshot All Recipes) und Kap. 2 (Kernfunktionalität).
-- **Screenshot-Platzhalter:** _[Screenshot einfügen: All-Recipes-Ansicht mit gesetzten Filtern (z. B. Continent + Difficulty + Min/Max Kochzeit) und sichtbarer Ergebnisanzahl nach Filterung.]_
+<br>
+
+  ![Filterfunktion All Recipes](./static/documentation_images/ui10_list_filtering.png)
+  <br>
+
 - **Aus Evaluation abgeleitet?:** Teilweise; Bedarf aus Problemdefinition abgeleitet und im Prototyp vertieft umgesetzt.
 
 ### 4.7 Weitere Erweiterungen über die genannten Punkte hinaus
 - **Beschreibung & Nutzen:** Weitere umgesetzte Erweiterungen sind die persistente Favoritenfunktion (Toggle in Liste und Detail), owner-basierte Rechteprüfung für Bearbeiten/Löschen sowie ein Lösch-Bestätigungsdialog. Diese Funktionen verbessern Sicherheit, Datenintegrität und Fehlertoleranz in realen Nutzungssituationen.
 - **Wo umgesetzt:** Frontend: Favorite-Interaktion und Delete-Dialog in `src/lib/components/RecipesTable.svelte`, `src/routes/all-recipes/[id]/+page.svelte`, `src/lib/components/ConfirmDeleteModal.svelte`, Edit-UI in `src/routes/all-recipes/[id]/edit/+page.svelte`. Backend: Actions und Rechteprüfungen in `src/routes/all-recipes/+page.server.js`, `src/routes/all-recipes/user-created/+page.server.js`, `src/routes/all-recipes/favorites/+page.server.js`, `src/routes/all-recipes/[id]/+page.server.js`, `src/routes/all-recipes/[id]/edit/+page.server.js`. Datenbank: Favoriten-Collection und Ownership-Checks in `src/lib/server/recipes-db.js`.
-- **Referenz:** Screens `ui3_recipelist.png`, `ui4_recipedetailpage.png`, `ui6_1_created_list.png`, `ui6_2_favorite_list.png` in Kap. 3.4.1.
-- **Screenshot-Platzhalter:** _[Screenshot einfügen: (a) Favorit-Toggle (Stern) in Liste oder Detailseite, (b) sichtbare Edit/Delete-Aktionen nur bei eigenem Rezept, (c) geöffnetes Delete-Bestätigungsmodal.]_
+- **Referenz:** Screens `ui3_recipelist.png`, `ui4_recipedetailpage.png`, `ui6_1_created_list.png`, `ui6_2_favorite_list.png` in Kap. 3.4.1. <br>
+
+  ![Favorite und Edit/Delete](./static/documentation_images/ui11_1_recipe_detail_fav_del_edit.png)  
+  <br>
+  ![Delete-Bestätigungsdialog](./static/documentation_images/ui11_2_recipe_detail_del_dialog.png) <br>
 - **Aus Evaluation abgeleitet?:** Nein, als gezielte funktionale Erweiterung für realistische Workflows umgesetzt.
 
-## 5. Projektorganisation [Optional]
+## 5. Projektorganisation
 - **Repository & Struktur:**  
   Das Projekt wurde als zentrales Git-Repository organisiert und folgt einer klaren Trennung zwischen UI, Routing, serverseitiger Logik und statischen Assets.  
   Der Hauptcode liegt unter `src/`:  

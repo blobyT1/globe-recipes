@@ -404,14 +404,30 @@ Fasst die technische Realisierung zusammen.
   Für wiederkehrende Seitenmuster (Hintergrundbild + lesbarer Inhaltsbereich) wurden `PageShell` und `ContentBox` als wiederverwendbares Design-System im Kleinen eingeführt, was Konsistenz und Wartbarkeit erhöht.
 
 ### 3.5 Validate TODO TODO TODO
-- **URL der getesteten Version** (separat deployt):
-- **Ziele der PrÃ¼fung:** _[welche Fragen sollen beantwortet werden?]_  
-- **Vorgehen:** _[moderiert/unmoderiert; remote/on-site]_  
-- **Stichprobe:** _[Mit wem wurde getestet? Profil; Anzahl]_  
-- **Aufgaben/Szenarien:** _[Ausformulierte Testaufgaben]_  
+- **Screenshots der getesteten Version / Evaluation von Woche 14** 
+  Es gibt für diese Evaluation keine aktiv verlinkte, separat bereitgestellte Testversion. Statt eines Testlinks werden in der Dokumentation Screenshots jener Seiten gezeigt, die im Projektverlauf einen deutlichen funktionalen und visuellen Overhaul erhalten haben.
+- **Ziele der Prüfung:**  
+  Die Evaluation hatte das Ziel, die praktische Nutzbarkeit des Prototyps mit realen Usern zu überprüfen, die das Projekt in **Woche 14 des Studiums am 20. Mai 2026** ausprobieren konnten. Im Zentrum standen zwei Kernfragen:  
+  1. Ist die Anwendung beim Navigieren selbsterklärend?  
+  2. Können Nutzer:innen zentrale Aufgaben ohne zusätzliche technische Erklärung erfolgreich ausführen?  
+  
+  Inhaltlich wurde geprüft, ob der End-to-End-Flow von der Startseite über das Entdecken von Rezepten bis zur aktiven Inhaltserstellung verständlich und durchführbar ist. Zusätzlich sollte sichtbar werden, an welchen Stellen Unsicherheiten entstehen, welche Interaktionsmuster fehlen und welche Erwartungen die Testpersonen aus vergleichbaren Webseiten mitbringen.  
+  Nach Abschluss der Aufgaben wurden gezielte Anschlussfragen verwendet, um qualitative Rückmeldungen zu erfassen: Wie wurde die Gesamterfahrung wahrgenommen? Wo traten Schwierigkeiten auf? Was hat gefehlt? Welche Standards sind von ähnlichen Plattformen gewohnt? Und welche Vereinfachungen würden die Bedienung verbessern?
+- **Vorgehen:**  
+  Die Evaluation wurde **vor Ort moderiert** durchgeführt. Die Testpersonen nutzten ihr eigenes Laptop-Gerät, starteten auf der Homepage und bearbeiteten die vorgegebenen Aufgaben entlang des vorgesehenen Navigationsflusses. Beobachtungen während der Durchführung sowie das Feedback nach dem Test wurden **schriftlich festgehalten**.
+- **Stichprobe:**  
+  Es wurden **2 Studierende** befragt:  
+  1. Ein Student mit Profil **Business Developer bei einer Bank**  
+  2. Ein Student mit Profil **Informatiker bei einer Bank**
+- **Aufgaben/Szenarien:**  
+  Für die Evaluation wurden zwei Testaufgaben eingesetzt:  
+  1. **Nach Rezepten suchen:**  
+     Nach der Arbeit gehen Sie nach Hause und wollen sich Abendessen vorbereiten. Da Sie immer wieder dieselben Gerichte zubereitet oder vom Lieferservice bestellt haben, möchten Sie mal was Neues ausprobieren. Sie gehen auf Globe Recipes, um sich nach neuen Rezepten zu erkundigen.  
+  2. **Eigenes Rezept erstellen:**  
+     Sie sind kreativ im Kochen und wollen Ihre Rezepte mit anderen Koch-Enthusiasten teilen. Sie gehen zu Globe Recipes und erstellen Ihr Rezept.
 - **Kennzahlen & Beobachtungen:** _[z. B. Erfolgsquote, Zeitbedarf, qualitative Findings]_  
 - **Zusammenfassung der Resultate:** _[Wichtigste Erkenntnisse; 2-4 SÃ¤tze]_  
-- **Abgeleitete Verbesserungen:** _[Anforderungen, die als nÃ¤chstes umgesetzt werden sollten, priorisiert, kurz begrÃ¼ndet; falls Verbesserungen im Prototyp konkret umgesetzt wurden: In Kap. 4 dokumentieren]_  
+- **Abgeleitete Verbesserungen:** _[Anforderungen, die als nächstes umgesetzt werden sollten, priorisiert, kurz begründet; falls Verbesserungen im Prototyp konkret umgesetzt wurden: In Kap. 4 dokumentieren]_  
 
 ## 4. Erweiterungen 
 Dokumentiert Erweiterungen über den Mindestumfang hinaus.

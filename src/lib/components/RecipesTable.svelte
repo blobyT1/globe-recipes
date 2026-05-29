@@ -223,7 +223,7 @@
 				</select>
 			</div>
 
-			<div class="col-6 col-md-6 col-lg-1">
+			<div class="col-6 col-md-6 col-lg-2">
 				<label class="form-label fw-semibold mb-1" for="filter-time-min">Min</label>
 				<input
 					id="filter-time-min"
@@ -236,7 +236,7 @@
 				/>
 			</div>
 
-			<div class="col-6 col-md-6 col-lg-1">
+			<div class="col-6 col-md-6 col-lg-2">
 				<label class="form-label fw-semibold mb-1" for="filter-time-max">Max</label>
 				<input
 					id="filter-time-max"

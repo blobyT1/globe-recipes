@@ -1,13 +1,13 @@
 import { fail, redirect } from '@sveltejs/kit';
 import { continents } from '$lib/data/continents.js';
-import { countries, countrySet } from '$lib/data/countries.js';
+import { countriesByContinent, countrySet, countryToContinent } from '$lib/data/countries.js';
 import { RecipeDbError, createRecipe } from '$lib/server/recipes-db.js';
 
 const LIMITS = {
-	titleMax: 80,
+	titleMax: 30,
 	descriptionMax: 500,
 	countryMax: 100,
-	cookingTimeMax: 1440,
+	cookingTimeMax: 360,
 	servingsMax: 50,
 	ingredientMax: 140,
 	instructionMax: 280,
@@ -41,7 +41,7 @@ export async function load({ locals }) {
 
 	return {
 		continents: continents.map((continent) => continent.name),
-		countries
+		countriesByContinent
 	};
 }
 
@@ -74,6 +74,7 @@ export const actions = {
 			difficulty,
 			servings: String(formData.get('servings') ?? '')
 		};
+		const mappedContinent = countryToContinent[country] ?? null;
 
 		if (
 			!title ||
@@ -81,6 +82,8 @@ export const actions = {
 			!continent ||
 			!country ||
 			!countrySet.has(country) ||
+			!mappedContinent ||
+			mappedContinent !== continent ||
 			country.length > LIMITS.countryMax ||
 			!description ||
 			description.length > LIMITS.descriptionMax ||

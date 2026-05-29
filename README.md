@@ -421,6 +421,7 @@ Dokumentiert Erweiterungen über den Mindestumfang hinaus.
 - **Wo umgesetzt:** Frontend: Theme-Toggle und globale Theme-Variablen in `src/routes/+layout.svelte`, frühes Theme-Setzen zur Vermeidung von Flashing in `src/app.html`, Darstellungskompatibilität in Komponentenstilen (u. a. `ContentBox`, Tabellen, Modal). Backend/Datenbank: nicht erforderlich, da persistente Speicherung über `localStorage` erfolgt.
 - **Referenz:** Kap. 3.4.1 (Designentscheidungen) und sichtbare Umschaltung in den UI-Screens. <br>
 <br>
+
   ![Dark Mode Home](./static/documentation_images/ui8_1_home_dark.png) <br> 
   ![Dark Mode All Recipes](./static/documentation_images/ui8_2_recipelist_dark.png) <br>
 

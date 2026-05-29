@@ -419,11 +419,11 @@ Dokumentiert Erweiterungen über den Mindestumfang hinaus.
 ### 4.1 Dark Mode mit persistenter Theme-Auswahl
 - **Beschreibung & Nutzen:** Die Anwendung wurde um einen Light-/Dark-Mode erweitert, der direkt in der Navigation umschaltbar ist. Die Auswahl bleibt über Seitenwechsel und neue Sessions hinweg erhalten. Das verbessert die Nutzbarkeit bei unterschiedlichen Lichtverhältnissen und erhöht den Reifegrad der Oberfläche.
 - **Wo umgesetzt:** Frontend: Theme-Toggle und globale Theme-Variablen in `src/routes/+layout.svelte`, frühes Theme-Setzen zur Vermeidung von Flashing in `src/app.html`, Darstellungskompatibilität in Komponentenstilen (u. a. `ContentBox`, Tabellen, Modal). Backend/Datenbank: nicht erforderlich, da persistente Speicherung über `localStorage` erfolgt.
-- **Referenz:** Kap. 3.4.1 (Designentscheidungen) und sichtbare Umschaltung in den UI-Screens. <br>
-<br>
-
-  ![Dark Mode Home](./static/documentation_images/ui8_1_home_dark.png) <br> 
-  ![Dark Mode All Recipes](./static/documentation_images/ui8_2_recipelist_dark.png) <br>
+- **Referenz:** Kap. 3.4.1 (Designentscheidungen) und sichtbare Umschaltung in den UI-Screens.
+  
+  ![Dark Mode Home](./static/documentation_images/ui8_1_home_dark.png)
+  
+  ![Dark Mode All Recipes](./static/documentation_images/ui8_2_recipelist_dark.png)
 
 - **Aus Evaluation abgeleitet?:** Nein, initial als Qualitäts- und UX-Erweiterung umgesetzt.
 
@@ -448,31 +448,32 @@ Dokumentiert Erweiterungen über den Mindestumfang hinaus.
 ### 4.5 Auf- und absteigende Sortierung in All Recipes
 - **Beschreibung & Nutzen:** Die Tabelle unterstützt interaktive Sortierung pro Spalte mit Richtungswechsel (aufsteigend/absteigend). Das beschleunigt Vergleiche und hilft, relevante Rezepte schneller zu finden.
 - **Wo umgesetzt:** Frontend: Sortierzustände und Sortierlogik in `src/lib/components/RecipesTable.svelte` (`sortColumn`, `sortDirection`, `toggleSort`, `sortedRecipes`). Backend/Datenbank: keine zusätzliche Logik, da Sortierung innerhalb der geladenen Ergebnisliste im Frontend erfolgt.
-- **Referenz:** Kap. 3.4.1 (All-Recipes-Screen).<br>
-  ![Sortierung aufsteigend](./static/documentation_images/ui9_1_list_sorting_asc.png) <br> 
+- **Referenz:** Kap. 3.4.1 (All-Recipes-Screen).
+  
+  ![Sortierung aufsteigend](./static/documentation_images/ui9_1_list_sorting_asc.png)
+  
   ![Sortierung absteigend](./static/documentation_images/ui9_2_list_sorting_desc.png)
-  <br>
+
 - **Aus Evaluation abgeleitet?:** Nein, als Effizienz-Erweiterung implementiert.
 
 ### 4.6 Erweiterte Filterfunktion in All Recipes
 - **Beschreibung & Nutzen:** Zusätzlich zur Grundauflistung wurde eine kombinierbare Filter- und Suchfunktion umgesetzt: Volltextsuche, Kontinent-Filter, Difficulty-Filter sowie Kochzeit-Min/Max und Reset. Damit lassen sich große Rezeptmengen deutlich zielgerichteter eingrenzen.
 - **Wo umgesetzt:** Frontend: Filterformular, Anwendungslogik und Berechnung der Ergebnislisten in `src/lib/components/RecipesTable.svelte` (`applyFilters`, `resetFilters`, `filteredRecipes`). Backend/Datenbank: Bereitstellung der Rezeptdaten über bestehende Ladefunktionen; Filterung bewusst im Frontend für direkte Interaktionsrückmeldung im Prototyp.
 - **Referenz:** Kap. 3.4.1 (Screenshot All Recipes) und Kap. 2 (Kernfunktionalität).
-<br>
-
+  
   ![Filterfunktion All Recipes](./static/documentation_images/ui10_list_filtering.png)
-  <br>
 
 - **Aus Evaluation abgeleitet?:** Teilweise; Bedarf aus Problemdefinition abgeleitet und im Prototyp vertieft umgesetzt.
 
 ### 4.7 Weitere Erweiterungen über die genannten Punkte hinaus
 - **Beschreibung & Nutzen:** Weitere umgesetzte Erweiterungen sind die persistente Favoritenfunktion (Toggle in Liste und Detail), owner-basierte Rechteprüfung für Bearbeiten/Löschen sowie ein Lösch-Bestätigungsdialog. Diese Funktionen verbessern Sicherheit, Datenintegrität und Fehlertoleranz in realen Nutzungssituationen.
 - **Wo umgesetzt:** Frontend: Favorite-Interaktion und Delete-Dialog in `src/lib/components/RecipesTable.svelte`, `src/routes/all-recipes/[id]/+page.svelte`, `src/lib/components/ConfirmDeleteModal.svelte`, Edit-UI in `src/routes/all-recipes/[id]/edit/+page.svelte`. Backend: Actions und Rechteprüfungen in `src/routes/all-recipes/+page.server.js`, `src/routes/all-recipes/user-created/+page.server.js`, `src/routes/all-recipes/favorites/+page.server.js`, `src/routes/all-recipes/[id]/+page.server.js`, `src/routes/all-recipes/[id]/edit/+page.server.js`. Datenbank: Favoriten-Collection und Ownership-Checks in `src/lib/server/recipes-db.js`.
-- **Referenz:** Screens `ui3_recipelist.png`, `ui4_recipedetailpage.png`, `ui6_1_created_list.png`, `ui6_2_favorite_list.png` in Kap. 3.4.1. <br>
+- **Referenz:** Screens `ui3_recipelist.png`, `ui4_recipedetailpage.png`, `ui6_1_created_list.png`, `ui6_2_favorite_list.png` in Kap. 3.4.1.
+  
+  ![Favorite und Edit/Delete](./static/documentation_images/ui11_1_recipe_detail_fav_del_edit.png)
+  
+  ![Delete-Bestätigungsdialog](./static/documentation_images/ui11_2_recipe_detail_del_dialog.png)
 
-  ![Favorite und Edit/Delete](./static/documentation_images/ui11_1_recipe_detail_fav_del_edit.png)  
-  <br>
-  ![Delete-Bestätigungsdialog](./static/documentation_images/ui11_2_recipe_detail_del_dialog.png) <br>
 - **Aus Evaluation abgeleitet?:** Nein, als gezielte funktionale Erweiterung für realistische Workflows umgesetzt.
 
 ## 5. Projektorganisation

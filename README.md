@@ -590,7 +590,7 @@ Gleichzeitig zeigten sich klare Grenzen: KI-generierte Vorschläge sind nicht au
 
 Die zentralen Risiken lagen in möglicher Fehlinterpretation von Anforderungen, übergenerischen Lösungen und inkonsistenter Qualität einzelner Entwürfe. Diese Risiken wurden durch systematische Prüfung reduziert: schrittweises Vorgehen, gezielte Nachfragen, manuelle Anpassung, Tests der Funktionen und Abgleich mit den Projektzielen.
 
-Insgesamt war KI ein sehr wirksames Entwicklungswerkzeug, aber nicht Ersatz für eigene technische Entscheidungen. Der finale Projektstand entstand durch die Kombination aus KI-Entwürfen und eigenständiger Auswahl, Integration, Korrektur und Qualitätssicherung.
+Insgesamt war KI ein sehr wirksames Entwicklungswerkzeug, aber nicht Ersatz für eigene technische Entscheidungen. Der finale Projektstand entstand durch die Kombination aus KI-Entwürfen und eigenständiger Auswahl, Integration, Korrektur und Qualitätssicherung. 
 
 ## 7. Anhang
 - **Dokumentationen:**

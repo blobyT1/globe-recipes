@@ -25,6 +25,10 @@
 	let showDeleteConfirm = $state(false);
 	let allowDeleteSubmit = $state(false);
 	let pendingDeleteForm = $state(null);
+	let itemsPerPage = $state(10);
+	let currentPage = $state(1);
+
+	const PAGE_SIZE_OPTIONS = [10, 20, 50, 100];
 
 	const favoriteIdSet = $derived(new Set((favoriteRecipeIds ?? []).map((id) => String(id))));
 	const continentOptions = $derived.by(() =>
@@ -44,6 +48,7 @@
 		appliedSelectedDifficulty = draftSelectedDifficulty;
 		appliedCookingTimeMin = draftCookingTimeMin;
 		appliedCookingTimeMax = draftCookingTimeMax;
+		currentPage = 1;
 	}
 
 	function resetFilters() {
@@ -57,6 +62,28 @@
 		appliedSelectedDifficulty = 'all';
 		appliedCookingTimeMin = '';
 		appliedCookingTimeMax = '';
+		currentPage = 1;
+	}
+
+	function setItemsPerPage(value) {
+		itemsPerPage = Number(value);
+		currentPage = 1;
+	}
+
+	function goToPage(pageNumber) {
+		const parsedPage = Number(pageNumber);
+		if (!Number.isInteger(parsedPage)) return;
+		currentPage = Math.max(1, Math.min(totalPages, parsedPage));
+	}
+
+	function goToPreviousPage() {
+		if (currentPage <= 1) return;
+		currentPage -= 1;
+	}
+
+	function goToNextPage() {
+		if (currentPage >= totalPages) return;
+		currentPage += 1;
 	}
 
 	function toSearchableText(recipe) {
@@ -182,6 +209,31 @@
 
 		return list;
 	});
+
+	const totalPages = $derived.by(() => Math.max(1, Math.ceil(sortedRecipes.length / itemsPerPage)));
+	const paginatedRecipes = $derived.by(() => {
+		const start = (currentPage - 1) * itemsPerPage;
+		return sortedRecipes.slice(start, start + itemsPerPage);
+	});
+	const pageStart = $derived.by(() => (sortedRecipes.length === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1));
+	const pageEnd = $derived.by(() =>
+		sortedRecipes.length === 0 ? 0 : Math.min(currentPage * itemsPerPage, sortedRecipes.length)
+	);
+	const pageNumbers = $derived.by(() => Array.from({ length: totalPages }, (_, index) => index + 1));
+
+	$effect(() => {
+		if (!PAGE_SIZE_OPTIONS.includes(itemsPerPage)) {
+			itemsPerPage = 10;
+		}
+
+		if (currentPage > totalPages) {
+			currentPage = totalPages;
+		}
+
+		if (currentPage < 1) {
+			currentPage = 1;
+		}
+	});
 </script>
 
 <div class="card border-0 bg-body-tertiary mb-4">
@@ -254,9 +306,24 @@
 			</div>
 		</form>
 
-		<p class="small text-secondary mt-3 mb-1">
-			Showing {sortedRecipes.length} of {recipes.length} recipes
-		</p>
+		<div class="d-flex flex-wrap align-items-end justify-content-between gap-3 mt-3 mb-1">
+			<p class="small text-secondary mb-0">
+				Showing {pageStart}-{pageEnd} of {sortedRecipes.length} filtered recipes (total {recipes.length})
+			</p>
+			<div class="d-flex align-items-center gap-2">
+				<label class="form-label small text-secondary fw-semibold mb-0" for="items-per-page">Per page</label>
+				<select
+					id="items-per-page"
+					class="form-select form-select-sm items-per-page-select"
+					value={itemsPerPage}
+					onchange={(event) => setItemsPerPage(event.currentTarget.value)}
+				>
+					{#each PAGE_SIZE_OPTIONS as pageSize}
+						<option value={pageSize}>{pageSize}</option>
+					{/each}
+				</select>
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -294,7 +361,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				{#each sortedRecipes as recipe}
+				{#each paginatedRecipes as recipe}
 					<tr onclick={(event) => openRecipeDetails(event, recipe._id)}>
 						<td class="star-cell">
 							<form method="POST" action="?/toggleFavorite">
@@ -347,6 +414,41 @@
 				{/each}
 			</tbody>
 		</table>
+	</div>
+
+	<div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mt-3">
+		<p class="small text-secondary mb-0">Page {currentPage} of {totalPages}</p>
+		<div class="d-flex flex-wrap align-items-center gap-2">
+			<button
+				class="btn btn-sm btn-outline-secondary"
+				type="button"
+				onclick={goToPreviousPage}
+				disabled={currentPage <= 1}
+			>
+				Previous
+			</button>
+
+			{#each pageNumbers as pageNumber}
+				<button
+					class={`btn btn-sm ${pageNumber === currentPage ? 'btn-primary' : 'btn-outline-secondary'}`}
+					type="button"
+					onclick={() => goToPage(pageNumber)}
+					aria-label={`Go to page ${pageNumber}`}
+					aria-current={pageNumber === currentPage ? 'page' : undefined}
+				>
+					{pageNumber}
+				</button>
+			{/each}
+
+			<button
+				class="btn btn-sm btn-outline-secondary"
+				type="button"
+				onclick={goToNextPage}
+				disabled={currentPage >= totalPages}
+			>
+				Next
+			</button>
+		</div>
 	</div>
 {/if}
 
@@ -407,5 +509,10 @@
 	.recipe-title-link:focus-visible {
 		color: var(--brand-primary-hover);
 		text-decoration: underline;
+	}
+
+	.items-per-page-select {
+		width: auto;
+		min-width: 88px;
 	}
 </style>

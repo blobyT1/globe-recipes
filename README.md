@@ -524,6 +524,15 @@ Fasst die technische Realisierung zusammen.
 
 - **Aus Evaluation abgeleitet?:** Nein, als gezielte funktionale Erweiterung für realistische Workflows umgesetzt.
 
+### 4.8 Pagination in All Recipes (10/20/50/100 pro Seite)
+- **Beschreibung & Nutzen:** Die Rezeptliste wurde um eine Seitennavigation erweitert, damit nicht mehr alle Treffer gleichzeitig dargestellt werden. Nutzer:innen können die Anzahl sichtbarer Einträge pro Seite (`10`, `20`, `50`, `100`) wählen und über Previous/Next sowie Seitenzahlen durch die Ergebnisse navigieren. Das reduziert visuelle Überlastung bei grossen Datenmengen, verbessert die Orientierung in langen Listen und macht die Nutzung auf kleineren Screens deutlich übersichtlicher.
+- **Wo umgesetzt:** Frontend: Pagination-State und Anzeige-/Navigationslogik in `src/lib/components/RecipesTable.svelte` (u. a. `itemsPerPage`, `currentPage`, `totalPages`, `paginatedRecipes`, Seitenwechsel-Funktionen). Die Pagination greift für alle drei Listenansichten (`All`, `User Created`, `Favorites`), da diese dieselbe Tabellenkomponente verwenden. Backend/Datenbank: keine zusätzliche Anpassung, da die Seitenteilung im aktuellen Prototyp auf der bereits geladenen Ergebnisliste im Frontend erfolgt.
+- **Referenz:** Kap. 3.4.1 (All-Recipes-Screen) sowie die Listeninteraktion in Kap. 2 (Kernfunktionalität).
+  
+  <img src="./static/old_test_version/pagination_all_recipes.png" alt="All Recipes mit Pagination-Steuerung" width="780">
+
+- **Aus Evaluation abgeleitet?:** Nein, als Skalierungs- und Usability-Verbesserung für grössere Rezeptmengen umgesetzt.
+
 ## 5. Projektorganisation
 - **Repository & Struktur:**  
   Das Projekt wurde als zentrales Git-Repository organisiert und folgt einer klaren Trennung zwischen UI, Routing, serverseitiger Logik und statischen Assets.  

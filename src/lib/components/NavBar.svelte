@@ -11,7 +11,10 @@
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom">
 	<div class="container-fluid nav-container py-2">
-		<a class="navbar-brand fw-semibold brand-offset" href="/">{brand}</a>
+		<a class="navbar-brand fw-semibold brand-offset brand-with-logo" href="/">
+			<img src="/globe_recipes_logo.png" alt="Globe Recipes logo" class="brand-logo" />
+			<span>{brand}</span>
+		</a>
 		<button
 			class="navbar-toggler"
 			type="button"
@@ -74,6 +77,21 @@
 
 	.brand-offset {
 		margin-left: 0.25rem;
+	}
+
+	.brand-with-logo {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+
+	.brand-logo {
+		width: 56px;
+		height: 56px;
+		object-fit: contain;
+		border-radius: 0.4rem;
 	}
 
 	.actions {

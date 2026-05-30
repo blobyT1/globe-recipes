@@ -406,6 +406,35 @@ Fasst die technische Realisierung zusammen.
 ### 3.5 Validate TODO TODO TODO
 - **Screenshots der getesteten Version / Evaluation von Woche 14** 
   Es gibt für diese Evaluation keine aktiv verlinkte, separat bereitgestellte Testversion. Statt eines Testlinks werden in der Dokumentation Screenshots jener Seiten gezeigt, die im Projektverlauf einen deutlichen funktionalen und visuellen Overhaul erhalten haben.
+
+- **Evaluationsversion vs aktuelle Projektversion:**  
+  **Login-Page**  
+  <img src="./static/old_test_version/old_login_page.png" alt="Alte Login-Version" width="780">  
+  **Alte Version (Evaluationsversion):**  
+  Login ist funktional, aber relativ minimal. Die UI verwendet ein einfaches Bootstrap-Card-Layout in einem normalen `container`. Es gibt die Felder `username` und `password` plus Submit-Button. Ein direkter Sign-up-Einstieg fehlt. Die Serverlogik ist vereinfacht (Credential-Check + Cookie-Setzen), und die Redirect-Absicherung ist weniger streng.  
+  **Aktuelle Version:**  
+  Login ist stärker in den Gesamtstil integriert (`PageShell` + `ContentBox`) und enthält eine klare Sekundäraktion („Create account“). Felder sind sauberer ausgebaut (`autocomplete`, Begrenzungen), und die Serverlogik ist robuster (DB-basierte Auth, strukturierte Fehlerbehandlung, sichere Next-Redirect-Validierung).  
+  
+  **Create-Page**  
+  <img src="./static/old_test_version/old_create_page.png" alt="Alte Create-Version" width="780">  
+  **Alte Version (Evaluationsversion):**  
+  Das Formular war linear und weniger geführt. `country` war ein Freitextfeld. Ingredients und Instructions wurden als reine Multiline-Textareas („one per line“) erfasst. Einzelne Einträge konnten nicht direkt bearbeitet oder umsortiert werden. Die Validierung war vorhanden, aber deutlich einfacher.  
+  **Aktuelle Version:**  
+  Das Formular ist interaktiver und stärker geführt: `country` als Dropdown, gekoppelte Continent/Country-Logik, strengere Limits (u. a. Titel/Kochzeit), strukturierte Listen für Zutaten und Schritte. Einträge können einzeln hinzugefügt, inline editiert (Edit/Save/Cancel), entfernt und per Drag-and-Drop mit dediziertem Handle neu sortiert werden. Die Servervalidierung wurde deutlich vertieft.  
+  
+  **All-Recipes-Page**  
+  <img src="./static/old_test_version/old_list_page.png" alt="Alte All-Recipes-Version" width="780">  
+  **Alte Version (Evaluationsversion):**  
+  Es gab eine einzige Tabellenansicht mit Basissortierung. Kernaktionen waren Detailansicht öffnen und ggf. eigenes Rezept löschen. Es gab keine Suche, keine Filter, keine getrennten Unteransichten und keine Favoriteninteraktion in der Liste.  
+  **Aktuelle Version:**  
+  Die Seite ist zu einem aktiven Arbeitsbereich ausgebaut: drei Ansichten (`All`, `User Created`, `Favorites`), Volltextsuche, Filter (Kontinent, Difficulty, Kochzeit Min/Max), Reset und Ergebnisanzeige. Favoriten können direkt in der Liste getoggelt werden. Delete ist sicherer durch Bestätigungsdialog. Die Logik ist über Komponenten modularisiert (`RecipesTable`, `RecipesViewNav`).  
+  
+  **Recipe-Detail-Page**  
+  <img src="./static/old_test_version/old_detail_page.png" alt="Alte Detail-Version" width="780">  
+  **Alte Version (Evaluationsversion):**  
+  Fokus lag auf der Anzeige von Rezeptinformationen (Titel, Beschreibung, Metadaten, Zutaten, Schritte). Die Seite war eher read-only und enthielt keine aktionsorientierten Funktionen wie Favorisieren, Bearbeiten oder Löschen direkt in der Detailansicht.  
+  **Aktuelle Version:**  
+  Die Detailseite ist deutlich handlungsorientierter: Favorit setzen/entfernen direkt auf der Seite, owner-basierte Edit-/Delete-Aktionen, Delete mit Confirm-Modal, „Created by“-Information und Login-Hinweis für nicht eingeloggte Nutzer:innen.
 - **Ziele der Prüfung:**  
   Die Evaluation hatte das Ziel, die praktische Nutzbarkeit des Prototyps mit realen Usern zu überprüfen, die das Projekt in **Woche 14 des Studiums am 20. Mai 2026** ausprobieren konnten. Im Zentrum standen zwei Kernfragen:  
   1. Ist die Anwendung beim Navigieren selbsterklärend?  
@@ -425,12 +454,15 @@ Fasst die technische Realisierung zusammen.
      Nach der Arbeit gehen Sie nach Hause und wollen sich Abendessen vorbereiten. Da Sie immer wieder dieselben Gerichte zubereitet oder vom Lieferservice bestellt haben, möchten Sie mal was Neues ausprobieren. Sie gehen auf Globe Recipes, um sich nach neuen Rezepten zu erkundigen.  
   2. **Eigenes Rezept erstellen:**  
      Sie sind kreativ im Kochen und wollen Ihre Rezepte mit anderen Koch-Enthusiasten teilen. Sie gehen zu Globe Recipes und erstellen Ihr Rezept.
-- **Kennzahlen & Beobachtungen:** _[z. B. Erfolgsquote, Zeitbedarf, qualitative Findings]_  
-- **Zusammenfassung der Resultate:** _[Wichtigste Erkenntnisse; 2-4 SÃ¤tze]_  
-- **Abgeleitete Verbesserungen:** _[Anforderungen, die als nächstes umgesetzt werden sollten, priorisiert, kurz begründet; falls Verbesserungen im Prototyp konkret umgesetzt wurden: In Kap. 4 dokumentieren]_  
+- **Kennzahlen & Beobachtungen:**  
+  Der Zeitbedarf für die Aufgabenbearbeitung war gering und lag bei den durchgeführten Tests jeweils unter 5 Minuten. Das Gesamtkonzept wurde insgesamt positiv aufgenommen, insbesondere im Hinblick auf Verständlichkeit und Nutzen im Alltag.
+- **Zusammenfassung der Resultate:**  
+  ![Issue Map](./static/old_test_version/issue_map.png)  
+  Der Dark Mode und die allgemeine UI wurden von den Testpersonen positiv bewertet. Zusätzlich zeigte sich, dass eine selbstständige Navigation durch die Anwendung in weiten Teilen gut möglich war, ohne dass laufend Unterstützung nötig war.
+- **Abgeleitete Verbesserungen:**  
+  Das Fundament der Anwendung sitzt und kann gezielt weiter ausgebaut werden. Als nächste sinnvolle Ausbauschritte wurden Verbesserungen bei Zeichenlimiten, Lösch- und Editfunktionen sowie bei den Listenansichten (Favorites und User-Created) und der Filterlogik identifiziert.
 
 ## 4. Erweiterungen 
-Dokumentiert Erweiterungen über den Mindestumfang hinaus.
 
 ### 4.1 Dark Mode mit persistenter Theme-Auswahl
 - **Beschreibung & Nutzen:** Die Anwendung wurde um einen Light-/Dark-Mode erweitert, der direkt in der Navigation umschaltbar ist. Die Auswahl bleibt über Seitenwechsel und neue Sessions hinweg erhalten. Das verbessert die Nutzbarkeit bei unterschiedlichen Lichtverhältnissen und erhöht den Reifegrad der Oberfläche.
@@ -447,13 +479,13 @@ Dokumentiert Erweiterungen über den Mindestumfang hinaus.
 - **Beschreibung & Nutzen:** Über den Mindestumfang hinaus wurde ein vollständiger Authentifizierungsprozess umgesetzt: Kontoerstellung, Login, Logout, Session-Verwaltung sowie Schutz für personalisierte Aktionen. Dadurch können eigene Inhalte und Favoriten benutzerbezogen und sicher verwaltet werden.
 - **Wo umgesetzt:** Frontend: Formulare in `src/routes/login/+page.svelte` und `src/routes/sign-up/+page.svelte`, Logout in `src/lib/components/NavBar.svelte`. Backend: Actions in `src/routes/login/+page.server.js`, `src/routes/sign-up/+page.server.js`, Logout-Endpunkt `src/routes/logout/+server.js`, Session-Laden über `src/hooks.server.js`, Auth-Logik in `src/lib/server/auth-db.js` (Passwort-Hashing, Session-Tokens, Cookie-Handling). Datenbank: Collections `users` und `sessions` mit Indizes in `auth-db.js`.
 - **Referenz:** Kap. 3.4.2 (Daten & Schnittstellen).
-- **Aus Evaluation abgeleitet?:** Nein, als funktionale Erweiterung für personalisierte Nutzung umgesetzt.
+- **Aus Evaluation abgeleitet?:** Teilweise, als funktionale Erweiterung für personalisierte Nutzung umgesetzt.
 
 ### 4.3 Zeicheneinschränkungen und erweiterte Validierung im Create-Formular
 - **Beschreibung & Nutzen:** Das Create-Formular wurde um systematische Feldgrenzen und Plausibilitätsprüfungen erweitert (z. B. Titel, Beschreibung, Zutaten, Schritte, Kochzeit, Portionen). Dadurch wird die Datenqualität erhöht, fehlerhafte Eingaben werden früh abgefangen und die Stabilität der nachgelagerten Listen-/Detailansichten verbessert.
 - **Wo umgesetzt:** Frontend: Eingabegrenzen über `maxlength`, `min`, `max` sowie strukturierte Erfassung von Zutaten/Schritten in `src/routes/create/+page.svelte`. Backend: zentrale Validierungslogik mit Grenzwerten (`LIMITS`) in `src/routes/create/+page.server.js` inklusive Fehlerbehandlung per `fail(...)`. Datenbank: indirekte Qualitätsverbesserung durch validierte Datensätze vor dem Speichern.
 - **Referenz:** Kap. 3.4.1 (Create-Screen) und Kap. 3.4.2 (Form-Validierung).
-- **Aus Evaluation abgeleitet?:** Nein, als robuste Basis für konsistente Eingaben umgesetzt.
+- **Aus Evaluation abgeleitet?:** Ja, als robuste Basis für konsistente Eingaben umgesetzt.
 
 ### 4.4 Drei getrennte Ansichten in All Recipes (All, User Created, Favorites)
 - **Beschreibung & Nutzen:** Die Rezeptübersicht wurde in drei Nutzungsmodi aufgeteilt. Nutzer:innen können zwischen Gesamtbestand, eigenen Rezepten und Favoriten wechseln. Diese Trennung verbessert Orientierung, reduziert kognitive Last und unterstützt unterschiedliche Aufgaben (Entdecken, Verwalten, Personalisieren).
@@ -479,7 +511,7 @@ Dokumentiert Erweiterungen über den Mindestumfang hinaus.
   
   ![Filterfunktion All Recipes](./static/documentation_images/ui10_list_filtering.png)
 
-- **Aus Evaluation abgeleitet?:** Teilweise; Bedarf aus Problemdefinition abgeleitet und im Prototyp vertieft umgesetzt.
+- **Aus Evaluation abgeleitet?:** Ja; Bedarf aus Problemdefinition abgeleitet und im Prototyp vertieft umgesetzt.
 
 ### 4.7 Weitere Erweiterungen über die genannten Punkte hinaus
 - **Beschreibung & Nutzen:** Weitere umgesetzte Erweiterungen sind die persistente Favoritenfunktion (Toggle in Liste und Detail), owner-basierte Rechteprüfung für Bearbeiten/Löschen sowie ein Lösch-Bestätigungsdialog. Diese Funktionen verbessern Sicherheit, Datenintegrität und Fehlertoleranz in realen Nutzungssituationen.

@@ -403,7 +403,7 @@ Fasst die technische Realisierung zusammen.
   Kritische Aktionen (Delete) wurden mit einer expliziten Bestätigung abgesichert, um Fehlaktionen zu reduzieren.  
   Für wiederkehrende Seitenmuster (Hintergrundbild + lesbarer Inhaltsbereich) wurden `PageShell` und `ContentBox` als wiederverwendbares Design-System im Kleinen eingeführt, was Konsistenz und Wartbarkeit erhöht.
 
-### 3.5 Validate TODO TODO TODO
+### 3.5 Validate
 - **Screenshots der getesteten Version / Evaluation von Woche 14** 
   Es gibt für diese Evaluation keine aktiv verlinkte, separat bereitgestellte Testversion. Statt eines Testlinks werden in der Dokumentation Screenshots jener Seiten gezeigt, die im Projektverlauf einen deutlichen funktionalen und visuellen Overhaul erhalten haben.
 
@@ -593,7 +593,7 @@ Die zentralen Risiken lagen in möglicher Fehlinterpretation von Anforderungen, 
 Insgesamt war KI ein sehr wirksames Entwicklungswerkzeug, aber nicht Ersatz für eigene technische Entscheidungen. Der finale Projektstand entstand durch die Kombination aus KI-Entwürfen und eigenständiger Auswahl, Integration, Korrektur und Qualitätssicherung.
 
 ## 7. Anhang
-- **Quellen:**
+- **Dokumentationen:**
   - SvelteKit Dokumentation: `https://kit.svelte.dev/docs`
   - Bootstrap Dokumentation: `https://getbootstrap.com/docs/5.3/getting-started/introduction/`
   - MongoDB Dokumentation: `https://www.mongodb.com/docs/`

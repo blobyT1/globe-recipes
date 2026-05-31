@@ -108,7 +108,7 @@ export const actions = {
 		}
 
 		try {
-			await createRecipe({
+			const recipeId = await createRecipe({
 				title,
 				continent,
 				country,
@@ -122,7 +122,13 @@ export const actions = {
 				ownerId: locals.user.id,
 				ownerUsername: locals.user.username
 			});
+
+			throw redirect(303, `/all-recipes/${recipeId}`);
 		} catch (dbError) {
+			if (dbError?.status) {
+				throw dbError;
+			}
+
 			const message =
 				dbError instanceof RecipeDbError ? dbError.message : 'Could not save recipe right now.';
 			return fail(500, {
@@ -130,7 +136,5 @@ export const actions = {
 				values
 			});
 		}
-
-		throw redirect(303, '/all-recipes');
 	}
 };

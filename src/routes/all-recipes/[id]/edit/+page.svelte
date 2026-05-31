@@ -1,4 +1,5 @@
 <script>
+	import { flushSync } from 'svelte';
 	import ContentBox from '$lib/components/ContentBox.svelte';
 	import PageShell from '$lib/components/PageShell.svelte';
 
@@ -16,6 +17,7 @@
 	let editingInstructionValue = $state('');
 	let draggedIngredientIndex = $state(null);
 	let draggedInstructionIndex = $state(null);
+	let submitPreparationError = $state('');
 
 	const values = $derived(form?.values ?? data.initialValues);
 
@@ -197,6 +199,69 @@
 	function onInstructionDragEnd() {
 		draggedInstructionIndex = null;
 	}
+
+	function prepareListStateBeforeSubmit() {
+		submitPreparationError = '';
+
+		if (editingIngredientIndex !== null) {
+			const value = editingIngredientValue.trim();
+			if (!value || value.length > ingredientMax) {
+				submitPreparationError = `Please complete or cancel ingredient edit before saving (max ${ingredientMax} characters).`;
+				return false;
+			}
+			ingredientsList[editingIngredientIndex] = value;
+			cancelIngredientEdit();
+		}
+
+		if (editingInstructionIndex !== null) {
+			const value = editingInstructionValue.trim();
+			if (!value || value.length > instructionMax) {
+				submitPreparationError = `Please complete or cancel instruction edit before saving (max ${instructionMax} characters).`;
+				return false;
+			}
+			instructionsList[editingInstructionIndex] = value;
+			cancelInstructionEdit();
+		}
+
+		const pendingIngredient = ingredientInput.trim();
+		if (pendingIngredient) {
+			if (pendingIngredient.length > ingredientMax) {
+				submitPreparationError = `Ingredient is too long (max ${ingredientMax} characters).`;
+				return false;
+			}
+			ingredientsList.push(pendingIngredient);
+			ingredientInput = '';
+		}
+
+		const pendingInstruction = instructionInput.trim();
+		if (pendingInstruction) {
+			if (pendingInstruction.length > instructionMax) {
+				submitPreparationError = `Instruction is too long (max ${instructionMax} characters).`;
+				return false;
+			}
+			instructionsList.push(pendingInstruction);
+			instructionInput = '';
+		}
+
+		if (ingredientsList.length === 0 || instructionsList.length === 0) {
+			submitPreparationError = 'Please add at least one ingredient and one instruction before saving.';
+			return false;
+		}
+
+		return true;
+	}
+
+	function onFormSubmit(event) {
+		// Flush pending local state so hidden JSON fields are up to date in the first submit request.
+		let canSubmit = false;
+		flushSync(() => {
+			canSubmit = prepareListStateBeforeSubmit();
+		});
+
+		if (!canSubmit) {
+			event.preventDefault();
+		}
+	}
 </script>
 
 <PageShell
@@ -213,8 +278,11 @@
 			{#if form?.message}
 				<div class="alert alert-danger" role="alert">{form.message}</div>
 			{/if}
+			{#if submitPreparationError}
+				<div class="alert alert-warning" role="alert">{submitPreparationError}</div>
+			{/if}
 
-			<form method="POST" class="row g-3">
+			<form method="POST" class="row g-3" onsubmit={onFormSubmit}>
 				<input type="hidden" name="ingredientsJson" value={ingredientsJson} />
 				<input type="hidden" name="instructionsJson" value={instructionsJson} />
 
